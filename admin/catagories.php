@@ -53,6 +53,7 @@
 
                         </div><!-- Add Catagory form -->
 
+                        <!-- CATAGORIES TABLE -->
                         <div class="col-xs-6">
 
                           <table class="table table-bordered table-hover">
@@ -68,17 +69,8 @@
                               <!-- FIND ALL CATAGORIES -->
                               <?php   findAllCatagories();  ?>
 
-
-                              <?php
-                                //DELETE catagories
-                                if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
-                                {
-                                  $delete_cat_id=$_GET['delete'];
-                                  $query2="DELETE FROM catagory WHERE id = {$delete_cat_id} ";
-                                  $delete_query=mysqli_query($connection,$query2);
-                                  header("Location: catagories.php");// bo refresh krdnaway pageaka
-                                }
-                               ?>
+                              <!-- DELETE CATAGORIES -->
+                              <?php deleteCatagory(); ?>
 
                             </tbody>
                           </table>
