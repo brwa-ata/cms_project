@@ -22,6 +22,7 @@
       }
     }
   }
+
   function findAllCatagories()
   {
     global $connection;
@@ -41,6 +42,18 @@
       echo "<td><a href='catagories.php?edit={$cat_id}'>Edit</a></td>";
       // ama bo srynaway datakan bakar yat (delete) chwnka GET assoc arraya ama abeta key
       echo "</tr>";
+    }
+  }
+
+  function deleteCatagory()
+  {
+    global $connection;
+    if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
+    {
+      $delete_cat_id=$_GET['delete'];
+      $query2="DELETE FROM catagory WHERE id = {$delete_cat_id} ";
+      $delete_query=mysqli_query($connection,$query2);
+      header("Location: catagories.php");// bo refresh krdnaway pageaka
     }
   }
 
