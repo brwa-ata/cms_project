@@ -22,5 +22,26 @@
       }
     }
   }
+  function findAllCatagories()
+  {
+    global $connection;
+
+    $sql="select * from catagory";
+    $select_catagory=mysqli_query($connection,$sql);
+    while ($row=mysqli_fetch_assoc($select_catagory))
+    {
+      $cat_id=$row['id'];
+      $cat_title=$row['title'];
+
+      echo "<tr>";
+
+      echo "<td>{$cat_id}</td>";
+      echo "<td>{$cat_title}</td>";
+      echo "<td><a href='catagories.php?delete={$cat_id}'>Delete</a></td>";
+      echo "<td><a href='catagories.php?edit={$cat_id}'>Edit</a></td>";
+      // ama bo srynaway datakan bakar yat (delete) chwnka GET assoc arraya ama abeta key
+      echo "</tr>";
+    }
+  }
 
 ?>
