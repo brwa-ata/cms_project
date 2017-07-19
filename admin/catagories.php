@@ -21,7 +21,7 @@
                         </h1>
 
                         <!-- Add Catagory form -->
-                        <div class="col-sx-6">
+                        <div class="col-xs-6">
 
                           <form class="" action="" method="post">
 
@@ -38,7 +38,24 @@
 
                         </div><!-- Add Catagory form -->
 
+                        <div class="col-xs-6">
 
+                          <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th>Id</th>
+                                <th>Catagory Title</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Baseball Catagory</td>
+                                <td>Basketball Catagory</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
 
                     </div>
                 </div>
