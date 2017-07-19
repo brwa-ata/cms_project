@@ -58,11 +58,45 @@
 
                           </form>
 
+
+                          <!-- Edit Form  -->
+                          <form class="" action="" method="post">
+
+                              <div class="form-group">
+                                <label for="cat_title">Edit Catagory </label>
+
+                                <?php
+                                  if(isset($_GET['edit']))
+                                  {
+                                    $edit_cat_id=$_GET['edit'];
+
+                                    $sql="SELECT * FROM catagory WHERE id = $edit_cat_id ";
+                                    $select_edit_catagory=mysqli_query($connection,$sql);
+                                    while ($row=mysqli_fetch_assoc($select_edit_catagory))
+                                    {
+                                      $cat_id=$row['id'];
+                                      $cat_title=$row['title'];
+                                  ?>
+                                    <input value="<?php if(isset($cat_title)) {  echo $cat_title; } ?>" class="form-control" type="text" name="cat_title">
+
+                                <?php }
+                                  }
+
+                                 ?>
+
+
+                              </div>
+
+                              <div class="form-group">
+                                <input class="btn btn-primary" type="submit" name="submit" value="Update Catagory">
+                              </div>
+
+                          </form>
+                          <!-- Edit Form  -->
+
                         </div><!-- Add Catagory form -->
 
                         <div class="col-xs-6">
-
-
 
                           <table class="table table-bordered table-hover">
                             <thead>
@@ -88,12 +122,15 @@
                                     echo "<td>{$cat_id}</td>";
                                     echo "<td>{$cat_title}</td>";
                                     echo "<td><a href='catagories.php?delete={$cat_id}'>Delete</a></td>";
+                                    echo "<td><a href='catagories.php?edit={$cat_id}'>Edit</a></td>";
                                     // ama bo srynaway datakan bakar yat (delete) chwnka GET assoc arraya ama abeta key
                                     echo "</tr>";
                                   }
                               ?>
+
                               <?php
-                                if(isset($_GET['delete']))
+                                //DELETE catagories
+                                if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
                                 {
                                   $delete_cat_id=$_GET['delete'];
                                   $query2="DELETE FROM catagory WHERE id = {$delete_cat_id} ";
