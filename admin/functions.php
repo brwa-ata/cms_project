@@ -2,6 +2,7 @@
 
   function insert_catagories()
   {
+    global $connection;// bo away connectionala lerasha rwbat
     if(isset($_POST['submit']))
     {
       $cat_title=$_POST['cat_title'];
