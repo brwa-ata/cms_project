@@ -62,10 +62,7 @@
 
                         <div class="col-xs-6">
 
-                          <?php
-                              $sql="select * from catagory";
-                              $select_catagory=mysqli_query($connection,$sql);
-                          ?>
+
 
                           <table class="table table-bordered table-hover">
                             <thead>
@@ -77,6 +74,10 @@
                             <tbody>
 
                               <?php
+                                  //FIND ALL CATAGORIES
+
+                                  $sql="select * from catagory";
+                                  $select_catagory=mysqli_query($connection,$sql);
                                   while ($row=mysqli_fetch_assoc($select_catagory))
                                   {
                                     $cat_id=$row['id'];
@@ -86,10 +87,20 @@
 
                                     echo "<td>{$cat_id}</td>";
                                     echo "<td>{$cat_title}</td>";
-
+                                    echo "<td><a href='catagories.php?delete={$cat_id}'>Delete</a></td>";
+                                    // ama bo srynaway datakan bakar yat (delete) chwnka GET assoc arraya ama abeta key
                                     echo "</tr>";
                                   }
                               ?>
+                              <?php
+                                if(isset($_GET['delete']))
+                                {
+                                  $delete_cat_id=$_GET['delete'];
+                                  $query2="DELETE FROM catagory WHERE id = {$delete_cat_id} ";
+                                  $delete_query=mysqli_query($connection,$query2);
+                                  header("Location: catagories.php");// bo refresh krdnaway pageaka
+                                }
+                               ?>
 
                             </tbody>
                           </table>
