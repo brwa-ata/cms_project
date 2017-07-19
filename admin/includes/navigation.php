@@ -52,7 +52,7 @@
                 </ul>
             </li>
             <li>
-                <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Catagories Page</a>
             </li>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo">
