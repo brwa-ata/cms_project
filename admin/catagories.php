@@ -40,6 +40,11 @@
 
                         <div class="col-xs-6">
 
+                          <?php
+                              $sql="select * from catagory";
+                              $select_catagory=mysqli_query($connection,$sql);
+                          ?>
+
                           <table class="table table-bordered table-hover">
                             <thead>
                               <tr>
@@ -48,10 +53,22 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Baseball Catagory</td>
-                                <td>Basketball Catagory</td>
-                              </tr>
+
+                              <?php
+                                  while ($row=mysqli_fetch_assoc($select_catagory))
+                                  {
+                                    $cat_id=$row['id'];
+                                    $cat_title=$row['title'];
+                                    
+                                    echo "<tr>";
+
+                                    echo "<td>{$cat_id}</td>";
+                                    echo "<td>{$cat_title}</td>";
+
+                                    echo "</tr>";
+                                  }
+                              ?>
+
                             </tbody>
                           </table>
 
