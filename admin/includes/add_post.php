@@ -1,6 +1,32 @@
 <?php
   if(isset($_POST['create_post']))
   {
+    $post_title=$_POST['title'];
+    $post_author=$_POST['author'];
+    $post_catagory_id=$_POST['post_catagory_id'];
+    $post_status=$_POST['post_status'];
+
+    $post_image=$_FILES['post_image']['name']; // BO CHOOSEKRDNY IMG BAKAR DE
+    $post_image_temp=$_FILES['post_image']['tmp_name']; // TEMPORARY LOCATION DRWST AKA LA NAW SERVER
+
+    $post_tags=$_POST['post_tags'];
+    $post_content=$_POST['post_content'];
+    $post_date=date('d-m-y');
+    $post_comment_count=4;
+
+    move_uploaded_file($post_image_temp,"../images/$post_image"); // BO UPLOAD KRDNY IMAGE BAKAR YAT
+
+    $sql="INSERT INTO posts(post_catagory_id,post_title,post_author,post_date,
+        post_image,post_content,post_tags,post_comment_count,post_status)
+          VALUES({$post_catagory_id},'{$post_title}','{$post_author}',
+            NOW(),'{$post_image}','{$post_content}','{$post_tags}',
+            '{$post_comment_count}','{$post_status}')";
+
+          $create_post_query=mysqli_query($connection,$sql);
+          if(!$create_post_query)
+          {
+            die("QUERY FAILED " . mysqli_error($connection));
+          }
 
   }
 ?>
@@ -12,7 +38,7 @@
   </div>
 
   <div class="form-group">
-    <label for="post_catagory">Post Catagory</label>
+    <label for="post_catagory_id">Post Catagory</label>
     <input type="text" class="form-control" name="post_catagory_id">
   </div>
 
