@@ -12,6 +12,7 @@
         <th>Date</th>
         <th>Approve</th>
         <th>Un approve</th>
+        <th>Delete</th>
 
     </tr>
     </thead>
@@ -61,15 +62,29 @@
   */
 
             echo    '<td>'.$comment_email.'</td>';
-            echo    '<td>'.$comment_status.'</td>
-                     <td>Some Title</td>
-                     <td>'.$comment_date.'</td>';
+            echo    '<td>'.$comment_status.'</td>';
+
+
+            $sql="SELECT * FROM posts WHERE post_id= $comment_post_id";
+            $select_post_id_query=mysqli_query($connection,$sql);
+            while ($row=mysqli_fetch_assoc($select_post_id_query))
+            {
+                $post_id=$row['post_id'];
+                $post_title=$row['post_title'];
+                echo '<td><a href="../post.php?p_id='.$post_id.'" >'.$post_title.'</a></td>';
+            }
+
+
+                     
+                     
+                     
+            echo '  <td>'.$comment_date.'</td>';
 
             echo   "<td><a href='posts.php?delete='>Approve</a></td>";
             echo   "<td><a href='posts.php?delete='>Unapprove</a></td>";
 
             echo   "<td><a href='posts.php?delete='>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
-            echo   "<td><a href='posts.php?source=edit_posts&p_id='>Edit</a></td>";
+
             echo    "</tr>";//(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
             // ba bcheta pagey edit_posts (&) chwnka $_GET esta 2 key haya (p_id) bo away (id)y postaka warbgrun
             // kawata esta bam shewaya ka (edit)man krd achyna pagey editawa ka atwanin edit bkayn bo aw posta
