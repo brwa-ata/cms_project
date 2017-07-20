@@ -28,6 +28,7 @@
           {
             while ($row=mysqli_fetch_assoc($show_query))
             {
+              $cat_id=$row["post_id"];
               $post_image=$row["post_image"];
                 echo '<tr>
                         <td>'.$row["post_id"].'</td>
@@ -38,10 +39,25 @@
                   echo "<td> <img width=130 src='../images/$post_image'></td>"; // bo pshandany rsmy naw databaseaka
                   echo '<td>'.$row["post_tags"].'</td>
                         <td>'.$row["post_comment_count"].'</td>
-                        <td>'.$row["post_date"].'</td>
-                      </tr>';
+                        <td>'.$row["post_date"].'</td>';
+                  echo   "<td><a href='posts.php?delete={$cat_id}'>Delete</a></td>
+                      </tr>";
             }
           }
+        ?>
+
+        <?php
+            if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
+            {
+              $delete_cat_id=$_GET['delete'];
+              $query2="DELETE FROM posts WHERE post_id = {$delete_cat_id} ";
+              $delete_query=mysqli_query($connection,$query2);
+              if(!$delete_query)
+              {
+                die("QUERY FAILED " . mysqli_error($connection));
+              }
+              header("Location: posts.php");// bo refresh krdnaway pageaka
+            }
         ?>
 
     </tbody>
