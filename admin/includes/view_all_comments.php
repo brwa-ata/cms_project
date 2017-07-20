@@ -83,28 +83,28 @@
             echo   "<td><a href='posts.php?delete='>Approve</a></td>";
             echo   "<td><a href='posts.php?delete='>Unapprove</a></td>";
 
-            echo   "<td><a href='posts.php?delete='>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
-
-            echo    "</tr>";//(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
-            // ba bcheta pagey edit_posts (&) chwnka $_GET esta 2 key haya (p_id) bo away (id)y postaka warbgrun
-            // kawata esta bam shewaya ka (edit)man krd achyna pagey editawa ka atwanin edit bkayn bo aw posta
+            echo   "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
+            echo    "</tr>";
         }
     }
+
     ?>
 
-    <?php // DELETE POSTS
+    </tbody>
+</table>
+
+    <?php // DELETE COMMENT
     if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
     {
-        $delete_cat_id=$_GET['delete'];
-        $query2="DELETE FROM posts WHERE post_id = {$delete_cat_id} ";
+        $delete_comment_id=$_GET['delete'];
+        $query2="DELETE FROM comments WHERE comment_id =$delete_comment_id";
         $delete_query=mysqli_query($connection,$query2);
         if(!$delete_query)
         {
             die("QUERY FAILED " . mysqli_error($connection));
         }
-        header("Location: posts.php");// bo refresh krdnaway pageaka
+        header("Location: comments.php");// bo refresh krdnaway pageaka
     }
     ?>
 
-    </tbody>
-</table>
+
