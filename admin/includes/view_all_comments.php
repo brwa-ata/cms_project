@@ -80,8 +80,8 @@
                      
             echo '  <td>'.$comment_date.'</td>';
 
-            echo   "<td><a href='posts.php?delete='>Approve</a></td>";
-            echo   "<td><a href='posts.php?delete='>Unapprove</a></td>";
+            echo   "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
+            echo   "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
 
             echo   "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
             echo    "</tr>";
@@ -93,7 +93,34 @@
     </tbody>
 </table>
 
-    <?php // DELETE COMMENT
+    <?php
+
+
+    if(isset($_GET['approve']))
+    {
+        $approve_id=$_GET['approve'];
+        $query2="UPDATE comments SET comment_status= 'approved'  WHERE comment_id =$approve_id";
+        $delete_query=mysqli_query($connection,$query2);
+        if(!$delete_query)
+        {
+            die("QUERY FAILED " . mysqli_error($connection));
+        }
+        header("Location: comments.php");// bo refresh krdnaway pageaka
+    }
+
+    if(isset($_GET['unapprove']))
+    {
+        $unapprove_id=$_GET['unapprove'];
+        $query2="UPDATE comments SET comment_status= 'unapproved'  WHERE comment_id =$unapprove_id";
+        $delete_query=mysqli_query($connection,$query2);
+        if(!$delete_query)
+        {
+            die("QUERY FAILED " . mysqli_error($connection));
+        }
+        header("Location: comments.php");// bo refresh krdnaway pageaka
+    }
+
+    // DELETE COMMENT
     if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
     {
         $delete_comment_id=$_GET['delete'];
