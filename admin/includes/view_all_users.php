@@ -82,8 +82,8 @@
                      
 
 
-            echo   "<td><a href='comments.php?approve='>Approve</a></td>";
-            echo   "<td><a href='comments.php?unapprove='>Unapprove</a></td>";
+            echo   "<td><a href='users.php?change_to_admin=$user_id'>Admin</a></td>";
+            echo   "<td><a href='users.php?change_to_sub=$user_id'>Subscriber</a></td>";
 
             echo   "<td><a href='users.php?delete=$user_id'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
             echo    "</tr>";
@@ -98,28 +98,28 @@
     <?php
 
 
-    if(isset($_GET['approve']))
+    if(isset($_GET['change_to_admin']))
     {
-        $approve_id=$_GET['approve'];
-        $query2="UPDATE comments SET comment_status= 'approved'  WHERE comment_id =$approve_id";
-        $delete_query=mysqli_query($connection,$query2);
-        if(!$delete_query)
+        $Admin_id=$_GET['change_to_admin'];
+        $query2="UPDATE users SET user_role= 'Admin'  WHERE user_id =$Admin_id";
+        $chane_query=mysqli_query($connection,$query2);
+        if(!$chane_query)
         {
             die("QUERY FAILED " . mysqli_error($connection));
         }
-        header("Location: comments.php");// bo refresh krdnaway pageaka
+        header("Location: users.php");// bo refresh krdnaway pageaka
     }
 
-    if(isset($_GET['unapprove']))
+    if(isset($_GET['change_to_sub']))
     {
-        $unapprove_id=$_GET['unapprove'];
-        $query2="UPDATE comments SET comment_status= 'unapproved'  WHERE comment_id =$unapprove_id";
-        $delete_query=mysqli_query($connection,$query2);
-        if(!$delete_query)
+        $subscriber_id=$_GET['change_to_sub'];
+        $query2="UPDATE users SET user_role= 'Subscriber'  WHERE user_id =$subscriber_id";
+        $change_query=mysqli_query($connection,$query2);
+        if(!$change_query)
         {
             die("QUERY FAILED " . mysqli_error($connection));
         }
-        header("Location: comments.php");// bo refresh krdnaway pageaka
+        header("Location: users.php");// bo refresh krdnaway pageaka
     }
 
     // DELETE USER
