@@ -4,15 +4,13 @@
     <thead>
     <tr>
         <th>Id</th>
-        <th>Author</th>
-        <th>Comment</th>
+        <th>username</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
         <th>Email</th>
-        <th>Status</th>
-        <th>In Response to</th>
-        <th>Date</th>
-        <th>Approve</th>
-        <th>Un approve</th>
-        <th>Delete</th>
+        <th>Role</th>
+
+
 
     </tr>
     </thead>
@@ -20,27 +18,29 @@
 
     <tbody>
     <?php
-    $sql="SELECT * FROM comments";
-    $select_comment=mysqli_query($connection,$sql);
-    if(!$select_comment)
+    $sql="SELECT * FROM users";
+    $select_users=mysqli_query($connection,$sql);
+    if(!$select_users)
     {
         die("QUERY FAILED ". mysqli_error($connection));
     }
     else
     {
-        while ($row=mysqli_fetch_assoc($select_comment))
+        while ($row=mysqli_fetch_assoc($select_users))
         {
-            $comment_id=$row["comment_id"];
-            $comment_post_id=$row["comment_post_id"];
-            $comment_author=$row["comment_author"];
-            $comment_content=$row["comment_content"];
-            $comment_email=$row["comment_email"];
-            $comment_status=$row["comment_status"];
-            $comment_date=$row["comment_date"];
+            $user_id=$row["user_id"];
+            $username=$row["username"];
+            $user_password=$row["user_password"];
+            $user_firstname=$row["user_firstname"];
+            $user_lastname=$row["user_lastname"];
+            $user_email=$row["user_email"];
+            $user_image=$row["user_image"];
+            $user_role=$row["user_role"];
+
             echo '<tr>
-                        <td>'.$comment_id.'</td>
-                        <td>'.$comment_author.'</td>
-                        <td>'.$comment_content.'</td>';
+                        <td>'.$user_id.'</td>
+                        <td>'.$username.'</td>
+                        <td>'.$user_firstname.'</td>';
 
             // bo henany nawy catagoryiaka la tabley catagory
 /*            $sql="SELECT * FROM catagory WHERE id=$post_catagory_id";
@@ -61,10 +61,11 @@
             }
   */
 
-            echo    '<td>'.$comment_email.'</td>';
-            echo    '<td>'.$comment_status.'</td>';
+            echo    '<td>'.$user_lastname.'</td>';
+            echo    '<td>'.$user_email.'</td>';
+            echo    '<td>'.$user_role.'</td>';
 
-
+/*
             $sql="SELECT * FROM posts WHERE post_id= $comment_post_id";
             $select_post_id_query=mysqli_query($connection,$sql);
             while ($row=mysqli_fetch_assoc($select_post_id_query))
@@ -74,16 +75,15 @@
                 echo '<td><a href="../post.php?p_id='.$post_id.'" >'.$post_title.'</a></td>';
             }
 
-
+*/
                      
                      
-                     
-            echo '  <td>'.$comment_date.'</td>';
 
-            echo   "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
-            echo   "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
 
-            echo   "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
+            echo   "<td><a href='comments.php?approve='>Approve</a></td>";
+            echo   "<td><a href='comments.php?unapprove='>Unapprove</a></td>";
+
+            echo   "<td><a href='comments.php?delete='>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
             echo    "</tr>";
         }
     }
