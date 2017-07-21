@@ -1,29 +1,27 @@
 <?php
   if(isset($_POST['create_user']))
   {
-    $post_title=$_POST['title'];
-    $post_author=$_POST['author'];
-    $post_catagory_id=$_POST['post_catagory'];
-    $post_status=$_POST['post_status'];
 
-    $post_image=$_FILES['post_image']['name']; // BO CHOOSEKRDNY IMG BAKAR DE
-    $post_image_temp=$_FILES['post_image']['tmp_name']; // TEMPORARY LOCATION DRWST AKA LA NAW SERVER
+    $user_firstname=$_POST['user_firstname'];
+    $user_lastname=$_POST['user_lastname'];
+    $user_role=$_POST['user_role'];
 
-    $post_tags=$_POST['post_tags'];
-    $post_content=$_POST['post_content'];
-    $post_date=date('d-m-y');
+    $user_image=$_FILES['image']['name']; // BO CHOOSEKRDNY IMG BAKAR DE
+    $user_image_temp=$_FILES['image']['tmp_name']; // TEMPORARY LOCATION DRWST AKA LA NAW SERVER
+
+    $username=$_POST['username'];
+    $user_email=$_POST['user_email'];
+    $user_password=$_POST['user_password'];
+  //  $post_date=date('d-m-y');
 
 
-    move_uploaded_file($post_image_temp,"../images/$post_image"); // BO UPLOAD KRDNY IMAGE BAKAR YAT
+    move_uploaded_file($user_image_temp,"../images/$user_image"); // BO UPLOAD KRDNY IMAGE BAKAR YAT
 
-    $sql="INSERT INTO posts(post_catagory_id,post_title,post_author,post_date,
-        post_image,post_content,post_tags,post_status)
-          VALUES({$post_catagory_id},'{$post_title}','{$post_author}',
-            NOW(),'{$post_image}','{$post_content}','{$post_tags}',
-            '{$post_status}')";
+    $sql="INSERT INTO users(username,user_password,user_firstname,user_lastname,user_email,user_image,user_role) 
+          VALUES ('$username','$user_password','$user_firstname','$user_lastname','$user_email','$user_image','$user_role')";
 
-          $create_post_query=mysqli_query($connection,$sql);
-          if(!$create_post_query)
+          $add_user_query=mysqli_query($connection,$sql);
+          if(!$add_user_query)
           {
             die("QUERY FAILED " . mysqli_error($connection));
           }
@@ -49,13 +47,10 @@
     </select>
 
 
-
-
-                <!--  <div class="form-group">
-                    <label for="post_image"></label>
-                    <input type="file" name="post_image">
-                  </div>
-                -->
+     <div class="form-group">
+        <label for="user_image"></label>
+        <input type="file" name="image">
+      </div>
 
 
   <div class="form-group">
