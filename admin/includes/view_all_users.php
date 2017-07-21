@@ -85,7 +85,7 @@
             echo   "<td><a href='comments.php?approve='>Approve</a></td>";
             echo   "<td><a href='comments.php?unapprove='>Unapprove</a></td>";
 
-            echo   "<td><a href='comments.php?delete='>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
+            echo   "<td><a href='users.php?delete=$user_id'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
             echo    "</tr>";
         }
     }
@@ -122,17 +122,17 @@
         header("Location: comments.php");// bo refresh krdnaway pageaka
     }
 
-    // DELETE COMMENT
+    // DELETE USER
     if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
     {
-        $delete_comment_id=$_GET['delete'];
-        $query2="DELETE FROM comments WHERE comment_id =$delete_comment_id";
+        $delete_user_id=$_GET['delete'];
+        $query2="DELETE FROM users WHERE user_id =$delete_user_id";
         $delete_query=mysqli_query($connection,$query2);
         if(!$delete_query)
         {
             die("QUERY FAILED " . mysqli_error($connection));
         }
-        header("Location: comments.php");// bo refresh krdnaway pageaka
+        header("Location: users.php");// bo refresh krdnaway pageaka
     }
     ?>
 
