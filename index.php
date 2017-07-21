@@ -14,11 +14,13 @@
 
             <div class="col-md-8">
 
+                <!-- QUERY TO SHOW PUBLISH POST -->
               <?php
-                  $sql="SELECT * FROM posts";
+                  $sql="SELECT * FROM posts WHERE  post_status='publish'";
                   $ex=mysqli_query($connection,$sql);
                   while ($row=mysqli_fetch_assoc($ex))
                    {
+                      $post_id=$row['post_id'];
                       $post_title=$row['post_title'];
                       $post_author=$row['post_author'];
                       $post_date=$row['post_date'];
@@ -27,11 +29,11 @@
                 ?>
                 <!-- First Blog Post -->
                 <h1 class="page-header">
-                    Page Heading      
+                    Page Heading
                     <small>Secondary Text</small>
                 </h1>
                 <h2>
-                    <a href="#"><?php echo $post_title ?></a>
+                    <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
                     by <a href="index.php"><?php echo $post_author ?></a>
