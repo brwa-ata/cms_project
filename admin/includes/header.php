@@ -21,7 +21,7 @@
         header("Location: ../index.php");
         //wata gar chytr ['user_role'] set nakrabw (wakw peshtr yaksanman krd ba null)
         // awa ba bchetawa pagey saraky wata chytr natwane rastawxo brwatawa admin babe login
-    }q
+    }
 
 ?>
 <!DOCTYPE html>
@@ -52,6 +52,10 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <!-- LINK BO CHARTAKAY NAW ADMIN CHNWKA EMA EMPLATE BAKAR AHENYN BOYA AM LINKA PEWYSTA -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 
 </head>
 
