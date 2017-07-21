@@ -1,5 +1,5 @@
 <?php
-  if(isset($_POST['create_post']))
+  if(isset($_POST['create_user']))
   {
     $post_title=$_POST['title'];
     $post_author=$_POST['author'];
@@ -12,7 +12,7 @@
     $post_tags=$_POST['post_tags'];
     $post_content=$_POST['post_content'];
     $post_date=date('d-m-y');
-  //  $post_comment_count=4;
+
 
     move_uploaded_file($post_image_temp,"../images/$post_image"); // BO UPLOAD KRDNY IMAGE BAKAR YAT
 
@@ -32,62 +32,49 @@
 ?>
 <form  action="" method="post" enctype="multipart/form-data">
 
+    <div class="form-group">
+        <label for="author">Firstname</label>
+        <input type="text" class="form-control" name="user_firstname">
+    </div>
+
+    <div class="form-group">
+        <label for="post_status">Lastname</label>
+        <input type="text" class="form-control" name="user_lastname">
+    </div>
+
+    <select name="user_role" id="">
+        <option value="subscriber">Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="subscriber">Subscriber</option>
+    </select>
+
+
+
+
+                <!--  <div class="form-group">
+                    <label for="post_image"></label>
+                    <input type="file" name="post_image">
+                  </div>
+                -->
+
+
   <div class="form-group">
-    <label for="title">Post Title</label>
-    <input type="text" class="form-control" name="title">
+    <label for="post_tags">Username</label>
+    <input type="text" class="form-control" name="username">
   </div>
 
   <div class="form-group">
-      <select class="" name="post_catagory">
-
-        <?php
-          $sql="SELECT * FROM catagory ";
-          $select_catagory=mysqli_query($connection,$sql);
-          if(!$select_catagory)
-          {
-            die("QUERY FAILED" .mysqli_error($connection));
-          }
-          else
-          {
-              while ($row=mysqli_fetch_assoc($select_catagory))
-              {
-                $cat_id=$row['id'];
-                $cat_title=$row['title'];
-                echo "<option value='$cat_id'>$cat_title</opstion>";
-              }
-          }
-        ?>
-      </select>
+    <label for="post_content">Email</label>
+    <input type="email" class="form-control" name="user_email">
   </div>
 
-  <div class="form-group">
-    <label for="author">Post Author</label>
-    <input type="text" class="form-control" name="author">
-  </div>
+    <div class="form-group">
+        <label for="post_content">Password</label>
+        <input type="password" class="form-control" name="user_password">
+    </div>
 
   <div class="form-group">
-    <label for="post_status">Post Status</label>
-    <input type="text" class="form-control" name="post_status">
-  </div>
-
-  <div class="form-group">
-    <label for="post_image">Post Image</label>
-    <input type="file" name="post_image">
-  </div>
-
-  <div class="form-group">
-    <label for="post_tags">Post Tags</label>
-    <input type="text" class="form-control" name="post_tags">
-  </div>
-
-  <div class="form-group">
-    <label for="post_content">Post Content</label>
-    <textarea type="text" class="form-control" name="post_content" id="" cols="30" rows="10">
-    </textarea>
-  </div>
-
-  <div class="form-group">
-    <input class="btn btn-primary" type="submit" name="create_post" value="Publish Post">
+    <input class="btn btn-primary" type="submit" name="create_user" value="Add user">
   </div>
 
 </form>
