@@ -4,12 +4,23 @@
 <?php include 'functions.php';?>
 
 <?php
-    if (isset($_SESSION['user_role']))
+    //gar bam shewaya codeaka bnwsyn harchana kar aka balam
+    //la katy logout bwny user chwnka ['user_role']
+    //heshta har ba set krawy mawata har atwanyn babe login nchynawa naw admin
+    // charasary am keshayash bam shewayay xwarawa abe
+    /*if (isset($_SESSION['user_role']))
     {
        if($_SESSION['user_role'] !== 'Admin')
        {
            header("Location: ../index.php"); // wata agar admin nabw ba nacheta zhwrawaw bgaretawa ba pagey saraky
        }
+    }*/
+
+    if (!isset($_SESSION['user_role']))
+    {
+        header("Location: ../index.php");
+        //wata gar chytr ['user_role'] set nakrabw (wakw peshtr yaksanman krd ba null)
+        // awa ba bchetawa pagey saraky wata chytr natwane rastawxo brwatawa admin babe login
     }
 
 ?>
