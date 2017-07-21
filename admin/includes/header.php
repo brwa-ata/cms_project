@@ -21,7 +21,7 @@
         header("Location: ../index.php");
         //wata gar chytr ['user_role'] set nakrabw (wakw peshtr yaksanman krd ba null)
         // awa ba bchetawa pagey saraky wata chytr natwane rastawxo brwatawa admin babe login
-    }
+    }q
 
 ?>
 <!DOCTYPE html>
