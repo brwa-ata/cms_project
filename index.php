@@ -16,7 +16,7 @@
 
                 <!-- QUERY TO SHOW PUBLISH POST -->
               <?php
-                  $sql="SELECT * FROM posts WHERE  post_status='publish'";
+                  $sql="SELECT * FROM posts";
                   $ex=mysqli_query($connection,$sql);
                   while ($row=mysqli_fetch_assoc($ex))
                    {
@@ -25,7 +25,17 @@
                       $post_author=$row['post_author'];
                       $post_date=$row['post_date'];
                       $post_image=$row['post_image'];
-                      $post_content=$row['post_content'];
+                      $post_content=substr($row['post_content'],0,10);// tanha 10 charactery sarata la postaka pshan ba
+                       $post_status=$row['post_status'];
+
+                       if ($post_status !== 'publish')
+                       {
+                           echo '<h1 class="text-center">NO POST SORRY</h1>';
+                       }
+                       else
+                       {
+
+
                 ?>
                 <!-- First Blog Post -->
                 <h1 class="page-header">
@@ -46,7 +56,7 @@
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
-                <?php } ?>
+                <?php } }?>
 
             </div>
 
