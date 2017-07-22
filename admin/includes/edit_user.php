@@ -35,13 +35,25 @@ if (isset($_POST['edit_user'])) {
     $user_email = $_POST['user_email'];
     $user_password = $_POST['user_password'];
 
+    // wrgrtnaway nrxa randomaka bo encrypt krdn
+    // ama bo awaya kate password update akaynawa passwordaka dwbara encrypt bkretawa
+    // chwnka garwa nakayn awa passwordaka har wakw xoy la dbyaka save abe babe encrypt
+    $query = "SELECT randSalt FROM users";
+    $encrypt_query = mysqli_query($connection, $query);
+
+
+    $row= mysqli_fetch_array($encrypt_query);
+    $salt= $row['randSalt'];
+    $hashed_password=crypt($user_password,$salt);// encryption
+
+
     $sql="UPDATE users SET  
           username='$username',
           user_firstname='$user_firstname',
           user_lastname='$user_lastname',
           user_role='$user_role',
           user_email='$user_email',
-          user_password='$user_password'   
+          user_password='$hashed_password'   
           WHERE user_id=$the_user_id";
     $update_user_query = mysqli_query($connection, $sql);
     if (!$update_user_query) {
@@ -59,16 +71,16 @@ if (isset($_POST['edit_user'])) {
 
     <div class="form-group">
         <label for="author">Firstname</label>
-        <input value="<?php echo $user_firstname?>" type="text" class="form-control" name="user_firstname">
+        <input value="<?php echo $user_firstname; ?>" type="text" class="form-control" name="user_firstname">
     </div>
 
     <div class="form-group">
         <label for="post_status">Lastname</label>
-        <input value="<?php echo $user_lastname?>" type="text" class="form-control" name="user_lastname">
+        <input value="<?php echo $user_lastname; ?>" type="text" class="form-control" name="user_lastname">
     </div>
 
     <select name="user_role" id="">
-        <option value="subscriber"><?php echo $user_role?></option>
+        <option value="subscriber"><?php echo $user_role; ?></option>
         <?php
             if ($user_role=='Admin')
             {
@@ -84,23 +96,23 @@ if (isset($_POST['edit_user'])) {
 <!--
     <div class="form-group">
         <label for="user_image"></label>
-        <input value="<?php echo $user_image?>" type="file" name="user_image">
+        <input value="<?php echo $user_image; ?>" type="file" name="user_image">
     </div>
 -->
 
     <div class="form-group">
         <label for="post_tags">Username</label>
-        <input value="<?php echo $username?>" type="text" class="form-control" name="username">
+        <input value="<?php echo $username; ?>" type="text" class="form-control" name="username">
     </div>
 
     <div class="form-group">
         <label for="post_content">Email</label>
-        <input value="<?php echo $user_email?>" type="email" class="form-control" name="user_email">
+        <input value="<?php echo $user_email; ?>" type="email" class="form-control" name="user_email">
     </div>
 
     <div class="form-group">
         <label for="post_content">Password</label>
-        <input value="<?php echo $user_password?>" type="password" class="form-control" name="user_password">
+        <input value="" type="password" class="form-control" name="user_password">
     </div>
 
     <div class="form-group">
