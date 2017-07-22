@@ -28,6 +28,9 @@
             die("QUERY FAILED " . mysqli_error($connection));
           }
 
+          $p_id = mysqli_insert_id($connection);
+          echo "<p class='bg-success'>Post Created. <a href='../post.php?p_id={$p_id}'>View post</a></p>";
+
   }
 ?>
 <form  action="" method="post" enctype="multipart/form-data">
@@ -66,8 +69,12 @@
   </div>
 
   <div class="form-group">
-    <label for="post_status">Post Status</label>
-    <input type="text" class="form-control" name="post_status">
+
+      <select class="form-group" name="post_status" id="">
+          <option value="draft">Post Status</option>
+          <option value="publish">Publish</option>
+          <option value="draft">Draft</option>
+      </select>
   </div>
 
   <div class="form-group">
