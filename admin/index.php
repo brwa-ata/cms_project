@@ -154,6 +154,10 @@
                     $select_all_draft_post=mysqli_query($connection,$sql);
                     $post_draft_count=mysqli_num_rows($select_all_draft_post);
 
+                    $sql="SELECT * FROM posts WHERE post_status= 'publish' ";
+                    $select_all_publish_post=mysqli_query($connection,$sql);
+                    $post_publish_count=mysqli_num_rows($select_all_publish_post);
+
                     $sql="SELECT * FROM comments WHERE comment_status= 'unproved'";
                     $select_unapprove_comment=mysqli_query($connection,$sql);
                     $unapproved_comment_count=mysqli_num_rows($select_unapprove_comment);
@@ -177,17 +181,16 @@
 
                                 <?php
 
-                                    $element_text=['Active Post','Draft Posts','Comments','Pending Comment','Users','Subscribers','Categories'];
-                                    $element_count=[$post_count,$post_draft_count,$comment_count,$unapproved_comment_count,$user_count,$sub_user_count,$catagory_count];
+                                    $element_text=['All posts','Active Post','Draft Posts','Comments','Pending Comment','Users','Subscribers','Categories'];
+                                    $element_count=[$post_count,$post_publish_count,$post_draft_count,$comment_count,$unapproved_comment_count,$user_count,$sub_user_count,$catagory_count];
 
-                                    for ($i=0 ; $i<7;$i++)
+                                    for ($i=0 ; $i<8;$i++)
                                     {
                                         echo "['$element_text[$i]'" . "," . "$element_count[$i]],";
                                     }
 
                                 ?>
 
-                                //['Post', 1030]
                             ]);
 
                             var options = {
@@ -204,7 +207,7 @@
                     </script>
 
                     <!-- am scriptay xwarawa pewsyta bo kar pe krdny scriptakay sarawa -->
-                    <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+                    <div id="columnchart_material" style="width: auto; height: 500px;"></div>
 
                 </div>
 
