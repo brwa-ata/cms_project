@@ -1,7 +1,44 @@
 <?php  include "includes/db.php"; ?>
- <?php  include "includes/header.php"; ?>
+<?php  include "includes/header.php"; ?>
 
+ <?php
+    if (isset($_POST['submit']))
+    {
+        if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password']))
+        {
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
 
+            $username = mysqli_real_escape_string($connection, $username);
+            $email = mysqli_real_escape_string($connection, $email);
+            $password = mysqli_real_escape_string($connection, $password);
+
+            $query = "SELECT 	randSalt FROM users";
+            $encrypt_query = mysqli_query($connection, $query);
+
+            $row= mysqli_fetch_array($encrypt_query);
+
+            $salt= $row['randSalt'];
+
+            $password=crypt($password,$salt);//to encrypt password
+
+            $query="INSERT INTO users(username,user_email,user_password,user_role) 
+                    VALUES ('$username','$email','$password','subscriber')";
+            $register_user=mysqli_query($connection,$query);
+            if (!$register_user)
+            {
+                die("QUERY FAILED ". mysqli_error($connection));
+            }
+            else
+                echo "<script> alert('Registration successful ')</script>";
+        }
+        else
+        {
+            echo "<script> alert('FILL ALL FIELDS')</script>";
+        }
+    }
+ ?>
     <!-- Navigation -->
     
     <?php  include "includes/navigation.php"; ?>
