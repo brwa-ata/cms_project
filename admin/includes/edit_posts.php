@@ -104,15 +104,30 @@
     <input value="<?php echo $post_author; ?>" type="text" class="form-control" name="author">
   </div>
 
-  <div class="form-group">
-    <label for="post_status">Post Status</label>
-    <input value="<?php echo $post_status; ?>"  type="text" class="form-control" name="post_status">
-  </div>
+<div class="form-group">
+    <select name="post_status" id="">
+        <option value="<?php echo $post_status; ?>"> <?php echo $post_status; ?> </option>
+
+        <?php
+            if ($post_status == 'publish')
+            {
+                echo "<option value='draft'>daft</option>";
+            }
+            else
+            {
+                echo "<option value='publish'>publish</option>";
+            }
+        ?>
+    </select>
+</div>
+
 
   <div class="form-group">
     <img  width="400" src="../images/<?php echo $post_image; ?>" alt="">
     <input type="file" name="image" >
   </div>
+
+
 
   <div class="form-group">
     <label for="post_tags">Post Tags</label>
