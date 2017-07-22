@@ -24,6 +24,8 @@
             $user_lastname=$row['user_lastname'];
             $user_role=$row['user_role'];
         }
+        $user_password=crypt($user_password,$password);// this is like a decryption
+
         if ($user_name !== $username && $user_password !== $password)
         {
             header("Location: ../index.php"); // gar uname pass rast nabw bgarewa bo pagey saraky
