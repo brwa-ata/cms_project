@@ -51,6 +51,8 @@
                 <p><b><?php echo $post_content ?></b></p>
                 <?php } ?>
 
+
+
                 <!-- Blog Comments -->
 
                 <?php
@@ -61,18 +63,28 @@
                         $comment_email=$_POST['comment_email'];
                         $comment_content=$_POST['comment_content'];
 
-                        $comment_sql="INSERT INTO comments(comment_post_id,comment_author,comment_email,comment_content,comment_status,comment_date) 
-                                      VALUES ($post_id,'$comment_author','$comment_email','$comment_content','unproved',now())";
-                        $ex_comment_sql=mysqli_query($connection,$comment_sql);
-                        if (!$ex_comment_sql){
-                            die("QUERY FAILED". mysqli_error($connection));
+                        if(empty($_POST['comment_author']) || empty($_POST['comment_email']) || $_POST['comment_content'])
+                        {
+                            echo "<script>
+                                    alert('FIELDS CAN NOT BE EMPTY');
+                                  </script>";
                         }
 
-                        $sql="UPDATE posts SET post_comment_count= post_comment_count + 1
+                        else
+                        {
+                            $comment_sql="INSERT INTO comments(comment_post_id,comment_author,comment_email,comment_content,comment_status,comment_date) 
+                                      VALUES ($post_id,'$comment_author','$comment_email','$comment_content','unproved',now())";
+                            $ex_comment_sql=mysqli_query($connection,$comment_sql);
+                            if (!$ex_comment_sql){
+                                die("QUERY FAILED". mysqli_error($connection));
+                            }
+
+                            $sql="UPDATE posts SET post_comment_count= post_comment_count + 1
                               WHERE post_id=$post_id"; // bamay sarawa indexy naw am columna la naw databaseaka zyad akain basm shewaya harchan comment bkre bo postaka countek zyad aka
-                        $count_comment=mysqli_query($connection,$sql);
-                        if (!$count_comment){
-                            die("QUERY FAILED". mysqli_error($connection));
+                            $count_comment=mysqli_query($connection,$sql);
+                            if (!$count_comment){
+                                die("QUERY FAILED". mysqli_error($connection));
+                            }
                         }
 
                     }
