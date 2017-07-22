@@ -117,7 +117,7 @@
                     }
                     else
                     {
-                        echo $post_id;
+
                     while ($row=mysqli_fetch_assoc($select_comment_query))
                     {
                         $comment_date=$row['comment_date'];
