@@ -1,80 +1,140 @@
+<?php
+    if (isset($_POST['checkBoxArray']))
+    {
 
-<table class="table table-bordered table-hover">
-    <thead>
-        <thead>
-           <tr>
-              <th>Id</th>
-              <th>Author</th>
-              <th>Title</th>
-              <th>Catagory</th>
-              <th>Statuis</th>
-              <th>Image</th>
-              <th>Tags</th>
-              <th>Comments</th>
-              <th>Date</th>
-               <th>Delete</th>
-               <th>Edit</th>
-
-           </tr>
-        </thead>
-    </thead>
-
-    <tbody>
-        <?php
-          $sql="SELECT * FROM posts";
-          $show_query=mysqli_query($connection,$sql);
-          if(!$show_query)
-          {
-            die("QUERY FAILED ". mysqli_error($connection));
-          }
-          else
-          {
-            while ($row=mysqli_fetch_assoc($show_query))
+        foreach ($_POST['checkBoxArray'] as $checkBox_id_Value)
+        {
+            $bulk_options=$_POST['bulk_options'];
+            switch ($bulk_options)
             {
-              $post_id=$row["post_id"];
-              $post_author=$row["post_author"];
-              $post_title=$row["post_title"];
-              $post_catagory_id=$row["post_catagory_id"];
-              $post_status=$row["post_status"];
-              $post_image=$row["post_image"];
-              $post_tags=$row["post_tags"];
-              $post_comment_count=$row["post_comment_count"];
-              $post_date=$row["post_date"];
+                case 'publish':
+                    $sql="UPDATE posts SET post_status='$bulk_options'
+                          WHERE post_id=$checkBox_id_Value";
+                    $update_to_publish=mysqli_query($connection,$sql);
+                    break;
+                case  'draft':
+                    $sql="UPDATE posts SET post_status='$bulk_options'
+                          WHERE post_id=$checkBox_id_Value";
+                    $update_to_publish=mysqli_query($connection,$sql);
+                    break;
+                case 'delete':
+                    $delete_sql="DELETE FROM posts WHERE post_id= $checkBox_id_Value";
+                    $delete_posts=mysqli_query($connection,$delete_sql);
+                    if (!$delete_posts)
+                        die("QUERY FAILED " . mysqli_error($connection));
+                    break;
 
-                 echo '<tr>
-                        <td>'.$post_id.'</td>
-                        <td>'.$post_author.'</td>
-                        <td>'.$post_title.'</td>';
 
-                        // bo henany nawy catagoryiaka la tabley catagory
-                        $sql="SELECT * FROM catagory WHERE id=$post_catagory_id";
-                        $select_catagory=mysqli_query($connection,$sql);
-                        if(!$select_catagory)
-                        {
-                          die("QUERY FAILED" .mysqli_error($connection));
-                        }
-                        else
-                        {
-                            while ($row=mysqli_fetch_assoc($select_catagory))
-                            {
-                              $cat_id=$row['id'];
-                              $cat_title=$row['title'];
-                            }
-                          }
-                  echo    '<td>'.$cat_title.'</td>';
-                  echo    '<td>'.$post_status.'</td>';
-                  echo "<td> <img width=130 src='../images/$post_image'></td>"; // bo pshandany rasmy naw databaseaka
-                  echo '<td>'.$post_tags.'</td>
-                        <td>'.$post_comment_count.'</td>
-                        <td>'.$post_date.'</td>';
-                  echo   "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
-                  echo   "<td><a href='posts.php?source=edit_posts&p_id={$post_id}'>Edit</a></td>";
-                  echo    "</tr>";//(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
-                                  // ba bcheta pagey edit_posts (&) chwnka $_GET esta 2 key haya (p_id) bo away (id)y postaka warbgrun
-                                  // kawata esta bam shewaya ka (edit)man krd achyna pagey editawa ka atwanin edit bkayn bo aw posta
             }
-          }
-        ?>
+        }
+
+    }
+
+
+?>
+<form action="" method="post">
+    <table class="table table-bordered table-hover">
+
+
+            <div class="col-xs-4" id="bulkOptionContainer">
+                <select class="form-control" name="bulk_options">
+                    <option value="">_</option>
+                    <option value="publish">Publish</option>
+                    <option value="draft">Draft</option>
+                    <option value="delete">Delete</option>
+                </select>
+            </div>
+
+            <div class="col-xs-4">
+                <input type="submit" name="submit" class="btn btn-success" value="Apply">
+                <a href="add_post.php" class="btn btn-primary">Add New</a>
+            </div>
+
+        <thead>
+            <thead>
+               <tr>
+                   <th><input type="checkbox" id="selectAllBoxes"></th>
+                  <th>Id</th>
+                  <th>Author</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Image</th>
+                  <th>Tags</th>
+                  <th>Comments</th>
+                  <th>Date</th>
+                   <th>Delete</th>
+                   <th>Edit</th>
+
+               </tr>
+            </thead>
+        </thead>
+
+        <tbody>
+            <?php
+              $sql="SELECT * FROM posts";
+              $show_query=mysqli_query($connection,$sql);
+              if(!$show_query)
+              {
+                die("QUERY FAILED ". mysqli_error($connection));
+              }
+              else
+              {
+                while ($row=mysqli_fetch_assoc($show_query))
+                {
+                  $post_id=$row["post_id"];
+                  $post_author=$row["post_author"];
+                  $post_title=$row["post_title"];
+                  $post_catagory_id=$row["post_catagory_id"];
+                  $post_status=$row["post_status"];
+                  $post_image=$row["post_image"];
+                  $post_tags=$row["post_tags"];
+                  $post_comment_count=$row["post_comment_count"];
+                  $post_date=$row["post_date"];
+
+                     echo '<tr>';
+                     ?>
+
+        <td><input name="checkBoxArray[]" value="<?php echo $post_id; ?>" type="checkbox" class="checkbox"></td>
+
+
+                    <?php
+                          echo ' <td>'.$post_id.'</td>
+                            <td>'.$post_author.'</td>
+                            <td>'.$post_title.'</td>';
+
+                            // bo henany nawy catagoryiaka la tabley catagory
+                            $sql="SELECT * FROM catagory WHERE id=$post_catagory_id";
+                            $select_catagory=mysqli_query($connection,$sql);
+                            if(!$select_catagory)
+                            {
+                              die("QUERY FAILED" .mysqli_error($connection));
+                            }
+                            else
+                            {
+                                while ($row=mysqli_fetch_assoc($select_catagory))
+                                {
+                                  $cat_id=$row['id'];
+                                  $cat_title=$row['title'];
+                                }
+                              }
+                      echo    '<td>'.$cat_title.'</td>';
+                      echo    '<td>'.$post_status.'</td>';
+                      echo "<td> <img width=130 src='../images/$post_image'></td>"; // bo pshandany rasmy naw databaseaka
+                      echo '<td>'.$post_tags.'</td>
+                            <td>'.$post_comment_count.'</td>
+                            <td>'.$post_date.'</td>';
+                      echo   "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
+                      echo   "<td><a href='posts.php?source=edit_posts&p_id={$post_id}'>Edit</a></td>";
+                      echo    "</tr>";//(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
+                                      // ba bcheta pagey edit_posts (&) chwnka $_GET esta 2 key haya (p_id) bo away (id)y postaka warbgrun
+                                      // kawata esta bam shewaya ka (edit)man krd achyna pagey editawa ka atwanin edit bkayn bo aw posta
+                }
+              }
+            ?>
+        </tbody>
+    </table>
+</form>
 
         <?php // DELETE POSTS
             if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
@@ -90,5 +150,3 @@
             }
         ?>
 
-    </tbody>
-</table>
