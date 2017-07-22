@@ -12,16 +12,52 @@
                           WHERE post_id=$checkBox_id_Value";
                     $update_to_publish=mysqli_query($connection,$sql);
                     break;
+
                 case  'draft':
                     $sql="UPDATE posts SET post_status='$bulk_options'
                           WHERE post_id=$checkBox_id_Value";
                     $update_to_publish=mysqli_query($connection,$sql);
                     break;
+
                 case 'delete':
                     $delete_sql="DELETE FROM posts WHERE post_id= $checkBox_id_Value";
                     $delete_posts=mysqli_query($connection,$delete_sql);
                     if (!$delete_posts)
                         die("QUERY FAILED " . mysqli_error($connection));
+                    break;
+
+                case 'clone':
+                    $sql="SELECT * FROM posts WHERE post_id=$checkBox_id_Value";
+                    $select_post_query=mysqli_query($connection,$sql);
+                    if(!$select_post_query)
+                    {
+                        echo "FIRST";
+                        die("QUERY FAILED ". mysqli_error($connection));
+                    }
+
+                    while ($row = mysqli_fetch_array($select_post_query))
+                    {
+
+                        $post_author = $row["post_author"];
+                        $post_title = $row["post_title"];
+                        $post_catagory_id = $row["post_catagory_id"];
+                        $post_status = $row["post_status"];
+                        $post_image = $row["post_image"];
+                        $post_tags = $row["post_tags"];
+                        $post_content = $row["post_content"];
+                        $post_date = $row["post_date"];
+                    }
+
+                    $query="INSERT INTO posts(post_catagory_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_status)
+                            VALUES ($post_catagory_id,'$post_title','$post_author',NOW(),'$post_image','$post_content ','$post_tags','$post_status')";
+
+                    $copy_query=mysqli_query($connection,$query);
+                    if (!$copy_query)
+                    {
+
+                        die("QUERY FAILED " . mysqli_error($connection));
+                    }
+
                     break;
 
 
@@ -41,6 +77,7 @@
                     <option value="">_</option>
                     <option value="publish">Publish</option>
                     <option value="draft">Draft</option>
+                    <option value="clone">Clone</option>
                     <option value="delete">Delete</option>
                 </select>
             </div>
@@ -72,7 +109,7 @@
 
         <tbody>
             <?php
-              $sql="SELECT * FROM posts";
+              $sql="SELECT * FROM posts ORDER BY post_id DESC ";
               $show_query=mysqli_query($connection,$sql);
               if(!$show_query)
               {
