@@ -48,6 +48,7 @@
                 <img class="img-responsive" src="images/<?php echo $post_image ?>" alt="">
 
                 <hr>
+                <p><b><?php echo $post_content ?></b></p>
                 <?php } ?>
 
                 <!-- Blog Comments -->
