@@ -41,7 +41,7 @@
  ?>
     <!-- Navigation -->
     
-    <?php  include "includes/navigation.php"; ?>
+    <?php  include "includes/register-navigation.php"; ?>
     
  
     <!-- Page Content -->
