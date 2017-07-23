@@ -1,5 +1,18 @@
 <?php
 
+
+function escape($string)// am functiona bakar de bo naheshty sql injection
+    // boya har kate dataman la form wargrtawa ama bakar ahenyn
+    //EX: $username= escape($_POST['username']);
+{
+    global  $connection;
+    return mysqli_real_escape_string($connection,trim($string));
+
+}
+
+
+
+
   function insert_catagories()
   {
     global $connection;// bo away connectionala lerasha rwbat
