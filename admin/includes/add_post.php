@@ -2,7 +2,7 @@
   if(isset($_POST['create_post']))
   {
     $post_title=$_POST['title'];
-    $post_author=$_POST['author'];
+    $post_user=$_POST['user'];
     $post_catagory_id=$_POST['post_catagory'];
     $post_status=$_POST['post_status'];
 
@@ -16,9 +16,9 @@
 
     move_uploaded_file($post_image_temp,"../images/$post_image"); // BO UPLOAD KRDNY IMAGE BAKAR YAT
 
-    $sql="INSERT INTO posts(post_catagory_id,post_title,post_author,post_date,
+    $sql="INSERT INTO posts(post_catagory_id,post_title,post_user,post_date,
         post_image,post_content,post_tags,post_status)
-          VALUES({$post_catagory_id},'{$post_title}','{$post_author}',
+          VALUES({$post_catagory_id},'{$post_title}','{$post_user}',
             NOW(),'{$post_image}','{$post_content}','{$post_tags}',
             '{$post_status}')";
 
@@ -72,7 +72,7 @@
 
     <div class="form-group">
         <label for="users">Users</label>
-        <select class="" name="users">
+        <select class="" name="user">
 
             <?php
             $sql="SELECT * FROM users ";
@@ -87,7 +87,7 @@
                 {
                     $user_id=$row['user_id'];
                     $username=$row['username'];
-                    echo "<option value='$user_id'>$username</opstion>";
+                    echo "<option value='$username'>$username</opstion>";
                 }
             }
             ?>
