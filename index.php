@@ -16,7 +16,34 @@
 
                 <!-- QUERY TO SHOW PUBLISH POST -->
               <?php
-                  $sql="SELECT * FROM posts";
+                    if (isset($_GET['page']))
+                    {
+                        $page=$_GET['page'];
+
+                    }
+                    else {
+                        $page = '';
+                    }
+
+                    if ($page =='' || $page==1)
+                    {
+                        $page_1=0;
+                    }
+                    else
+                    {
+                        $page_1=($page*6) - 6;
+                    }
+
+
+
+                    $query="SELECT * FROM posts ";
+                    $find_post_count=mysqli_query($connection,$query);
+                    $count=mysqli_num_rows($find_post_count);
+
+                    $count=ceil($count/6);
+
+
+                  $sql="SELECT * FROM posts LIMIT $page_1,6";
                   $ex=mysqli_query($connection,$sql);
                   while ($row=mysqli_fetch_assoc($ex))
                    {
@@ -28,11 +55,12 @@
                       $post_content=substr($row['post_content'],0,10);// tanha 10 charactery sarata la postaka pshan ba
                        $post_status=$row['post_status'];
 
-               if ($post_status == 'publish')
+               if ($post_status == 'publish' || $post_status=='draft')
                {
 
 
                 ?>
+
                 <!-- First Blog Post -->
                 <h1 class="page-header">
                     Page Heading
@@ -42,7 +70,7 @@
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author ?></a>
+                    by <a href="author_post.php?author=<?php echo $post_author ?>&p_id=<?php echo $post_id ?>"><?php echo $post_author ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date ?></p>
                 <hr>
@@ -72,6 +100,26 @@
         <?php
           include 'includes/footer.php';
          ?>
+    <hr>
+
+    <ul class="pager">
+
+        <?php
+            for ($i=1 ; $i<=$count ; $i++)
+            {
+                if ($i == $page)// ama wata bo aw pageay ka tyayayn
+                {
+                    echo "<li><a class='active_link' href='index.php?page=$i'>$i</a></li>";
+                }
+                else
+                {
+                    echo "<li><a href='index.php?page=$i'>$i</a></li>";
+                }
+            }
+        ?>
+
+
+    </ul>
 </body>
 
 </html>
