@@ -125,14 +125,19 @@
     // DELETE USER
     if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
     {
-        $delete_user_id=$_GET['delete'];
-        $query2="DELETE FROM users WHERE user_id =$delete_user_id";
-        $delete_query=mysqli_query($connection,$query2);
-        if(!$delete_query)
+        if (isset($_SESSION['user_role']))
         {
-            die("QUERY FAILED " . mysqli_error($connection));
+            if ($_SESSION['user_role'] == 'admin')
+            {
+                $delete_user_id = mysqli_real_escape_string($connection,$_GET['delete']);
+                $query2 = "DELETE FROM users WHERE user_id =$delete_user_id";
+                $delete_query = mysqli_query($connection, $query2);
+                if (!$delete_query) {
+                    die("QUERY FAILED " . mysqli_error($connection));
+                }
+                header("Location: users.php");// bo refresh krdnaway pageaka
+            }
         }
-        header("Location: users.php");// bo refresh krdnaway pageaka
     }
     ?>
 
