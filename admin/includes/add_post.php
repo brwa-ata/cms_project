@@ -41,6 +41,7 @@
   </div>
 
   <div class="form-group">
+      <label for="catagory">Category</label>
       <select class="" name="post_catagory">
 
         <?php
@@ -63,10 +64,36 @@
       </select>
   </div>
 
-  <div class="form-group">
+ <!-- <div class="form-group">
     <label for="author">Post Author</label>
     <input type="text" class="form-control" name="author">
   </div>
+-->
+
+    <div class="form-group">
+        <label for="users">Users</label>
+        <select class="" name="users">
+
+            <?php
+            $sql="SELECT * FROM users ";
+            $select_users=mysqli_query($connection,$sql);
+            if(!$select_users)
+            {
+                die("QUERY FAILED" .mysqli_error($connection));
+            }
+            else
+            {
+                while ($row=mysqli_fetch_assoc($select_users))
+                {
+                    $user_id=$row['user_id'];
+                    $username=$row['username'];
+                    echo "<option value='$user_id'>$username</opstion>";
+                }
+            }
+            ?>
+        </select>
+    </div>
+
 
   <div class="form-group">
 
