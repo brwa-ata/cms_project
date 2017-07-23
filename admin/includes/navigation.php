@@ -12,6 +12,9 @@
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
+
+
+      <li><a href="../index.php">OnlineUser <?php echo $_SESSION['num_of_online_user']; ?></a></li>
       <li><a href="../index.php">Home</a></li>
 
 
