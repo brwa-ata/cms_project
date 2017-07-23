@@ -14,7 +14,7 @@
         while ($row=mysqli_fetch_assoc($select_posts_by_id))
         {
           $post_id=$row["post_id"];
-          $post_author=$row["post_author"];
+          $post_user=$row["post_user"];
           $post_title=$row["post_title"];
           $post_catagory_id=$row["post_catagory_id"];
           $post_status=$row["post_status"];
@@ -101,11 +101,38 @@
       </select>
   </div>
 
-  <div class="form-group">
-    <label for="author">Post Author</label>
-    <input value="<?php echo $post_author; ?>" type="text" class="form-control" name="author">
-  </div>
 
+    <div class="form-group">
+        <label for="users">Users</label>
+        <select class="" name="user">
+            <option value="<?php echo $post_user; ?>"> <?php echo $post_user?></option>
+
+            <?php
+            $sql="SELECT * FROM users";
+            $select_users=mysqli_query($connection,$sql);
+            if(!$select_users)
+            {
+                die("QUERY FAILED" .mysqli_error($connection));
+            }
+            else
+            {
+                while ($row=mysqli_fetch_assoc($select_users))
+                {
+                    $user_id=$row['user_id'];
+                    $username=$row['username'];
+                    echo "<option value='$username'>$username</opstion>";
+                }
+            }
+            ?>
+        </select>
+    </div>
+
+
+ <!--   <div class="form-group">
+        <label for="author">Post Author</label>
+        <input value="<?php echo $post_author; ?>" type="text" class="form-control" name="author">
+    </div>
+-->
 <div class="form-group">
     <select name="post_status" id="">
         <option value="<?php echo $post_status; ?>"> <?php echo $post_status; ?> </option>
