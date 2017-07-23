@@ -78,7 +78,7 @@
                         $comment_email=$_POST['comment_email'];
                         $comment_content=$_POST['comment_content'];
 
-                        if(empty($_POST['comment_author']) || empty($_POST['comment_email']) || $_POST['comment_content'])
+                        if(empty($_POST['comment_author']) || empty($_POST['comment_email']) || empty($_POST['comment_content']))
                         {
                             echo "<script>
                                     alert('FIELDS CAN NOT BE EMPTY');
@@ -94,12 +94,18 @@
                                 die("QUERY FAILED". mysqli_error($connection));
                             }
 
-                            $sql="UPDATE posts SET post_comment_count= post_comment_count + 1
+                            echo "<script>
+                                    alert('Comment posted');
+                                  </script>";
+
+
+
+                          /*  $sql="UPDATE posts SET post_comment_count= post_comment_count + 1
                               WHERE post_id=$post_id"; // bamay sarawa indexy naw am columna la naw databaseaka zyad akain basm shewaya harchan comment bkre bo postaka countek zyad aka
                             $count_comment=mysqli_query($connection,$sql);
                             if (!$count_comment){
                                 die("QUERY FAILED". mysqli_error($connection));
-                            }
+                            }*/
                         }
 
                     }
