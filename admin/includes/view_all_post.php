@@ -92,7 +92,7 @@
                <tr>
                    <th><input type="checkbox" id="selectAllBoxes"></th>
                   <th>Id</th>
-                  <th>Author</th>
+                  <th>User</th>
                   <th>Title</th>
                   <th>Category</th>
                   <th>Status</th>
@@ -120,16 +120,17 @@
               {
                 while ($row=mysqli_fetch_assoc($show_query))
                 {
-                  $post_id=$row["post_id"];
-                  $post_author=$row["post_author"];
-                  $post_title=$row["post_title"];
-                  $post_catagory_id=$row["post_catagory_id"];
-                  $post_status=$row["post_status"];
-                  $post_image=$row["post_image"];
-                  $post_tags=$row["post_tags"];
-                  $post_comment_count=$row["post_comment_count"];
-                  $post_date=$row["post_date"];
-                  $post_view_count=$row['post_view_count'];
+                  $post_id            =$row["post_id"];
+                  $post_author        =$row["post_author"];
+                  $post_user          =$row['post_user'];
+                  $post_title         =$row["post_title"];
+                  $post_catagory_id   =$row["post_catagory_id"];
+                  $post_status        =$row["post_status"];
+                  $post_image         =$row["post_image"];
+                  $post_tags          =$row["post_tags"];
+                  $post_comment_count =$row["post_comment_count"];
+                  $post_date          =$row["post_date"];
+                  $post_view_count    =$row['post_view_count'];
 
                      echo '<tr>';
                      ?>
@@ -138,9 +139,19 @@
 
 
                     <?php
-                          echo ' <td>'.$post_id.'</td>
-                            <td>'.$post_author.'</td>
-                            <td>'.$post_title.'</td>';
+                          echo ' <td>'.$post_id.'</td>';
+
+                          if (!empty($post_author))
+                          {
+                              echo "<td>$post_author</td>";
+                          }
+                          elseif(!empty($post_user))
+                          {
+                              echo "<td>$post_user</td>";
+                          }
+
+
+                          echo  '<td>'.$post_title.'</td>';
 
                             // bo henany nawy catagoryiaka la tabley catagory
                             $sql="SELECT * FROM catagory WHERE id=$post_catagory_id";
