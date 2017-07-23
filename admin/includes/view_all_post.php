@@ -102,6 +102,7 @@
                   <th>Date</th>
                    <th>Delete</th>
                    <th>Edit</th>
+                   <th>Views</th>
 
                </tr>
             </thead>
@@ -128,6 +129,7 @@
                   $post_tags=$row["post_tags"];
                   $post_comment_count=$row["post_comment_count"];
                   $post_date=$row["post_date"];
+                  $post_view_count=$row['post_view_count'];
 
                      echo '<tr>';
                      ?>
@@ -157,15 +159,17 @@
                               }
                       echo    '<td>'.$cat_title.'</td>';
                       echo    '<td>'.$post_status.'</td>';
-                      echo "<td> <img width=130 src='../images/$post_image'></td>"; // bo pshandany rasmy naw databaseaka
-                      echo '<td>'.$post_tags.'</td>
-                            <td>'.$post_comment_count.'</td>
-                            <td>'.$post_date.'</td>';
-                      echo   "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
-                      echo   "<td><a href='posts.php?source=edit_posts&p_id={$post_id}'>Edit</a></td>";
-                      echo    "</tr>";//(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
-                                      // ba bcheta pagey edit_posts (&) chwnka $_GET esta 2 key haya (p_id) bo away (id)y postaka warbgrun
-                                      // kawata esta bam shewaya ka (edit)man krd achyna pagey editawa ka atwanin edit bkayn bo aw posta
+                      echo     "<td> <img width=130 src='../images/$post_image'></td>"; // bo pshandany rasmy naw databaseaka
+                      echo     '<td>'.$post_tags.'</td>
+                               <td>'.$post_comment_count.'</td>
+                               <td>'.$post_date.'</td>';
+                      echo    "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
+                      echo    "<td><a href='posts.php?source=edit_posts&p_id={$post_id}'>Edit</a></td>"; //(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
+                      echo    "<td><a href='posts.php?delete_view={$post_id}'>{$post_view_count}</a></td>";                                               // ba bcheta pagey edit_posts (&) chwnka $_GET esta 2 key haya (p_id) bo away (id)y postaka warbgrun
+                      echo    "</tr>";                                                                  // kawata esta bam shewaya ka (edit)man krd achyna pagey editawa ka atwanin edit bkayn bo aw posta
+
+
+
                 }
               }
             ?>
@@ -173,17 +177,32 @@
     </table>
 </form>
 
-        <?php // DELETE POSTS
-            if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
-            {
-              $delete_cat_id=$_GET['delete'];
-              $query2="DELETE FROM posts WHERE post_id = {$delete_cat_id} ";
-              $delete_query=mysqli_query($connection,$query2);
-              if(!$delete_query)
-              {
-                die("QUERY FAILED " . mysqli_error($connection));
-              }
-              header("Location: posts.php");// bo refresh krdnaway pageaka
-            }
-        ?>
+<?php // DELETE POSTS
+    if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
+    {
+      $delete_cat_id=$_GET['delete'];
+      $query2="DELETE FROM posts WHERE post_id = {$delete_cat_id} ";
+      $delete_query=mysqli_query($connection,$query2);
+      if(!$delete_query)
+      {
+        die("QUERY FAILED " . mysqli_error($connection));
+      }
+      header("Location: posts.php");// bo refresh krdnaway pageaka
+    }
+?>
+
+<?php // DELETE VIEWS
+    if (isset($_GET['delete_view']))
+    {
+        $view_post_id=$_GET['delete_view'];
+        $sql="UPDATE posts SET post_view_count=0 WHERE post_id=$view_post_id";
+        $erase_views=mysqli_query($connection,$sql);
+        if (!$erase_views)
+        {
+            die("QUERY FAILED ". mysqli_error($connection));
+        }
+        header("Location: posts.php");
+    }
+
+?>
 
