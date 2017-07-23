@@ -11,10 +11,12 @@
             $password = $_POST['password'];
 
             $username = mysqli_real_escape_string($connection, $username);
-            $email = mysqli_real_escape_string($connection, $email);
+            $email    = mysqli_real_escape_string($connection, $email);
             $password = mysqli_real_escape_string($connection, $password);
 
-            $query = "SELECT 	randSalt FROM users";
+            $password=password_hash($password, PASSWORD_DEFAULT, array('cost'=>10) );
+
+           /* $query = "SELECT 	randSalt FROM users";
             $encrypt_query = mysqli_query($connection, $query);
 
             $row= mysqli_fetch_array($encrypt_query);
@@ -22,6 +24,7 @@
             $salt= $row['randSalt'];
 
             $password=crypt($password,$salt);//to encrypt password
+            */
 
             $query="INSERT INTO users(username,user_email,user_password,user_role) 
                     VALUES ('$username','$email','$password','subscriber')";
