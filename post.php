@@ -14,24 +14,31 @@
 
             <div class="col-md-8">
 
-              <?php
-                if(isset($_GET['p_id']))
-                {
-                  $post_id=$_GET['p_id'];
-                }
-              ?>
+          <?php
+            if(isset($_GET['p_id']))
+            {
 
-              <?php
-                  $sql="SELECT * FROM posts WHERE post_id= $post_id ";
-                  $ex=mysqli_query($connection,$sql);
-                  while ($row=mysqli_fetch_assoc($ex))
-                   {
-                      $post_title=$row['post_title'];
-                      $post_author=$row['post_author'];
-                      $post_date=$row['post_date'];
-                      $post_image=$row['post_image'];
-                      $post_content=$row['post_content'];
-                ?>
+              $the_post_id=$_GET['p_id'];
+
+              $view_query = "UPDATE posts SET post_view_count=post_view_count + 1 WHERE post_id=$the_post_id ";
+              $send_query=mysqli_query($connection,$view_query);
+
+              if (!$send_query)
+              {
+                  die("QUERY FAILED " . mysqli_error($connection));
+              }
+
+              $sql="SELECT * FROM posts WHERE post_id= $the_post_id ";
+              $ex=mysqli_query($connection,$sql);
+              while ($row=mysqli_fetch_assoc($ex))
+               {
+                  $post_title=$row['post_title'];
+                  $post_author=$row['post_author'];
+                  $post_date=$row['post_date'];
+                  $post_image=$row['post_image'];
+                  $post_content=$row['post_content'];
+          ?>
+
                 <!-- First Blog Post -->
                 <h1 class="page-header">
                     Page Heading
@@ -49,7 +56,15 @@
 
                 <hr>
                 <p><b><?php echo $post_content ?></b></p>
-                <?php } ?>
+                <?php }
+            }
+
+          else
+          {
+              header("Location: index.php");
+          }
+
+                ?>
 
 
 
