@@ -92,7 +92,7 @@
                 echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
                 echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
 
-                echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
+                echo "<td><a href='view_post_comment.php?delete=$comment_id&post_id=".$_GET['post_id']."'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
                 echo "</tr>";
             }
         }
@@ -139,7 +139,7 @@
         {
             die("QUERY FAILED " . mysqli_error($connection));
         }
-        header("Location: comments.php");// bo refresh krdnaway pageaka
+        header("Location: view_post_comment.php?post_id=".$_GET['post_id']." ");// bo refresh krdnaway pageaka
     }
     ?>
 
