@@ -14,7 +14,12 @@
     $user_password=$_POST['user_password'];
   //  $post_date=date('d-m-y');
 
+      $user_firstname=mysqli_real_escape_string($connection,$user_firstname);
+      $user_lastname=mysqli_real_escape_string($connection,$user_lastname);
+      $username=mysqli_real_escape_string($connection,$username);
+      $user_password=mysqli_real_escape_string($connection,$user_password);
 
+    $user_password=password_hash($user_password,PASSWORD_DEFAULT, array('cost' => 10));
     move_uploaded_file($user_image_temp,"../images/$user_image"); // BO UPLOAD KRDNY IMAGE BAKAR YAT
 
     $sql="INSERT INTO users(username,user_password,user_firstname,user_lastname,user_email,user_image,user_role) 
@@ -25,6 +30,7 @@
           {
             die("QUERY FAILED " . mysqli_error($connection));
           }
+          header("Location: users.php");
 
   }
 ?>
