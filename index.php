@@ -31,7 +31,7 @@
                     }
                     else
                     {
-                        $page_1=($page*6) - 6;
+                        $page_1=($page*3) - 3;
                     }
 
 
@@ -40,16 +40,16 @@
                     $find_post_count=mysqli_query($connection,$query);
                     $count=mysqli_num_rows($find_post_count);
 
-                    $count=ceil($count/6);
+                    $count=ceil($count/3);
 
 
-                  $sql="SELECT * FROM posts LIMIT $page_1,6";
+                  $sql="SELECT * FROM posts LIMIT $page_1,3";
                   $ex=mysqli_query($connection,$sql);
                   while ($row=mysqli_fetch_assoc($ex))
                    {
                       $post_id=$row['post_id'];
                       $post_title=$row['post_title'];
-                      $post_author=$row['post_author'];
+                      $post_author=$row['post_user'];
                       $post_date=$row['post_date'];
                       $post_image=$row['post_image'];
                       $post_content=substr($row['post_content'],0,10);// tanha 10 charactery sarata la postaka pshan ba
