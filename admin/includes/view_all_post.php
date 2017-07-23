@@ -165,11 +165,11 @@
                       $query="SELECT * FROM comments WHERE comment_post_id= $post_id";
                       $send_comment_query=mysqli_query($connection,$query);
 
-                      $row=mysqli_fetch_array($send_comment_query);
-                      $comment_id=$row['comment_id'];
+                      $row=mysqli_fetch_assoc($send_comment_query);
+                      $comment_post_id=$row['comment_post_id'];
                       $count_comment=mysqli_num_rows($send_comment_query);
 
-                      echo "<td><a href='view_post_comment.php?comment_id=$count_comment'>$count_comment</a></td>";
+                      echo "<td><a href='view_post_comment.php?post_id=$comment_post_id'>$count_comment</a></td>";
 
                       echo '  <td>'.$post_date.'</td>';
                       echo    "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
