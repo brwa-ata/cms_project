@@ -1,4 +1,17 @@
+<?php include 'includes/header.php'; ?>
+<div id="wrapper">
+<?php include 'includes/navigation.php'; ?>
+<div id="page-wrapper">
 
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Weolcome Admin
+                    <small><?php echo $_SESSION['username']; ?></small>
+                </h1>
 <table class="table table-bordered table-hover">
     <thead>
     <thead>
@@ -21,78 +34,69 @@
     <tbody>
     <?php
 
-    if ($_GET['post_id'])
-    {
-        $the_comment_id=$_GET['post_id'];
-    }
-    $sql="SELECT * FROM comments WHERE comment_post_id = $the_comment_id";
-    $select_comment=mysqli_query($connection,$sql);
-    if(!$select_comment)
-    {
-        die("QUERY FAILED ". mysqli_error($connection));
-    }
-    else
-    {
-        while ($row=mysqli_fetch_assoc($select_comment))
-        {
-            $comment_id=$row["comment_id"];
-            $comment_post_id=$row["comment_post_id"];
-            $comment_author=$row["comment_author"];
-            $comment_content=$row["comment_content"];
-            $comment_email=$row["comment_email"];
-            $comment_status=$row["comment_status"];
-            $comment_date=$row["comment_date"];
-            echo '<tr>
-                        <td>'.$comment_id.'</td>
-                        <td>'.$comment_author.'</td>
-                        <td>'.$comment_content.'</td>';
+    if ($_GET['post_id']) {
+        $the_comment_id = $_GET['post_id'];
 
-            // bo henany nawy catagoryiaka la tabley catagory
-/*            $sql="SELECT * FROM catagory WHERE id=$post_catagory_id";
-            $select_catagory=mysqli_query($connection,$sql);
-            if(!$select_catagory)
-            {
-                die("QUERY FAILED" .mysqli_error($connection));
-            }
-            else
-            {
-                while ($row=mysqli_fetch_assoc($select_catagory))
-                {
-                    $cat_id=$row['id'];
-                    $cat_title=$row['title'];
+        $sql = "SELECT * FROM comments WHERE comment_post_id= $the_comment_id";
+        $select_comment = mysqli_query($connection, $sql);
+        if (!$select_comment) {
+            die("QUERY FAILED " . mysqli_error($connection));
+        } else {
+            while ($row = mysqli_fetch_assoc($select_comment)) {
+                $comment_id = $row["comment_id"];
+                $comment_post_id = $row["comment_post_id"];
+                $comment_author = $row["comment_author"];
+                $comment_content = $row["comment_content"];
+                $comment_email = $row["comment_email"];
+                $comment_status = $row["comment_status"];
+                $comment_date = $row["comment_date"];
+                echo '<tr>
+                        <td>' . $comment_id . '</td>
+                        <td>' . $comment_author . '</td>
+                        <td>' . $comment_content . '</td>';
 
-                    echo    '<td>'.$cat_title.'</td>';
+                // bo henany nawy catagoryiaka la tabley catagory
+                /*            $sql="SELECT * FROM catagory WHERE id=$post_catagory_id";
+                            $select_catagory=mysqli_query($connection,$sql);
+                            if(!$select_catagory)
+                            {
+                                die("QUERY FAILED" .mysqli_error($connection));
+                            }
+                            else
+                            {
+                                while ($row=mysqli_fetch_assoc($select_catagory))
+                                {
+                                    $cat_id=$row['id'];
+                                    $cat_title=$row['title'];
+
+                                    echo    '<td>'.$cat_title.'</td>';
+                                }
+                            }
+                  */
+
+                echo '<td>' . $comment_email . '</td>';
+                echo '<td>' . $comment_status . '</td>';
+
+
+                $sql = "SELECT * FROM posts WHERE post_id= $comment_post_id";
+                $select_post_id_query = mysqli_query($connection, $sql);
+                while ($row = mysqli_fetch_assoc($select_post_id_query)) {
+                    $post_id = $row['post_id'];
+                    $post_title = $row['post_title'];
+                    echo '<td><a href="../post.php?p_id=' . $post_id . '" >' . $post_title . '</a></td>';
                 }
+
+
+                echo '  <td>' . $comment_date . '</td>';
+
+                echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
+                echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
+
+                echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
+                echo "</tr>";
             }
-  */
-
-            echo    '<td>'.$comment_email.'</td>';
-            echo    '<td>'.$comment_status.'</td>';
-
-
-            $sql="SELECT * FROM posts WHERE post_id= $comment_post_id";
-            $select_post_id_query=mysqli_query($connection,$sql);
-            while ($row=mysqli_fetch_assoc($select_post_id_query))
-            {
-                $post_id=$row['post_id'];
-                $post_title=$row['post_title'];
-                echo '<td><a href="../post.php?p_id='.$post_id.'" >'.$post_title.'</a></td>';
-            }
-
-
-                     
-                     
-                     
-            echo '  <td>'.$comment_date.'</td>';
-
-            echo   "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
-            echo   "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
-
-            echo   "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
-            echo    "</tr>";
         }
     }
-
     ?>
 
     </tbody>
@@ -139,4 +143,14 @@
     }
     ?>
 
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- /#page-wrapper -->
+<?php include 'includes/fotter.php'; ?>
 
