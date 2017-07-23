@@ -1,45 +1,24 @@
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
 
+<?php // bo nardny Email balam pewsyta local nabyt wata online be projectakat
+// the message
+$msg = "First line of text\nSecond line of text";
+
+// use wordwrap() if lines are longer than 70 characters
+$msg = wordwrap($msg,70);
+
+// send email
+mail("someone@example.com","My subject",$msg);
+?>
+
  <?php
     if (isset($_POST['submit']))
     {
-        if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password']))
-        {
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
 
-            $username = mysqli_real_escape_string($connection, $username);
-            $email    = mysqli_real_escape_string($connection, $email);
-            $password = mysqli_real_escape_string($connection, $password);
-
-            $password=password_hash($password, PASSWORD_DEFAULT, array('cost'=>10) );
-
-           /* $query = "SELECT 	randSalt FROM users";
-            $encrypt_query = mysqli_query($connection, $query);
-
-            $row= mysqli_fetch_array($encrypt_query);
-
-            $salt= $row['randSalt'];
-
-            $password=crypt($password,$salt);//to encrypt password
-            */
-
-            $query="INSERT INTO users(username,user_email,user_password,user_role) 
-                    VALUES ('$username','$email','$password','subscriber')";
-            $register_user=mysqli_query($connection,$query);
-            if (!$register_user)
-            {
-                die("QUERY FAILED ". mysqli_error($connection));
-            }
-            else
-                echo "<script> alert('Registration successful ')</script>";
-        }
-        else
-        {
-            echo "<script> alert('FILL ALL FIELDS')</script>";
-        }
+        $to= "brwa@gmail.com";
+        $subject = $_POST['subject'];
+        $body= $_POST['body'];
     }
  ?>
     <!-- Navigation -->
@@ -55,22 +34,24 @@
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="form-wrap">
-                <h1>Register</h1>
+                <h1>Contact</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
-                        <div class="form-group">
-                            <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
-                        </div>
+
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
                         </div>
+
+                        <div class="form-group">
+                            <label for="subject" class="sr-only">Subject</label>
+                            <input type="text" name="subject" id="subject" class="form-control" placeholder="Enter Your Subject">
+                        </div>
+
                          <div class="form-group">
-                            <label for="password" class="sr-only">Password</label>
-                            <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                             <textarea class="form-control" name="body" id="body" cols="30" rows="10"></textarea>
                         </div>
                 
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Submit">
                     </form>
                  
                 </div>
