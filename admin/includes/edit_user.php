@@ -1,19 +1,14 @@
 <?php
 
-if (isset($_GET['u_id']))
-{
+if (isset($_GET['u_id'])) {
     $the_user_id = $_GET['u_id'];
 
-    $query="SELECT * FROM users WHERE user_id=$the_user_id";
-    $get_query=mysqli_query($connection,$query);
-    if (!$get_query)
-    {
-        die("QUERY FAILED". mysqli_error($connection));
-    }
-    else
-    {
-        while ($row=mysqli_fetch_assoc($get_query))
-        {
+    $query = "SELECT * FROM users WHERE user_id=$the_user_id";
+    $get_query = mysqli_query($connection, $query);
+    if (!$get_query) {
+        die("QUERY FAILED" . mysqli_error($connection));
+    } else {
+        while ($row = mysqli_fetch_assoc($get_query)) {
             $user_firstname = $row['user_firstname'];
             $user_lastname = $row['user_lastname'];
             $user_role = $row['user_role'];
@@ -23,31 +18,32 @@ if (isset($_GET['u_id']))
             $user_password = $row['user_password'];
         }
     }
-}
 
-if (isset($_POST['edit_user'])) {
+    if (isset($_POST['edit_user'])) {
 
-    $user_firstname = $_POST['user_firstname'];
-    $user_lastname = $_POST['user_lastname'];
-    $user_role = $_POST['user_role'];
-   // $user_image=$_POST['user_image'];
-    $username = $_POST['username'];
-    $user_email = $_POST['user_email'];
-    $user_password = $_POST['user_password'];
+        $user_firstname = $_POST['user_firstname'];
+        $user_lastname = $_POST['user_lastname'];
+        $user_role = $_POST['user_role'];
+        // $user_image=$_POST['user_image'];
+        $username = $_POST['username'];
+        $user_email = $_POST['user_email'];
+        $user_password = $_POST['user_password'];
 
-    // wrgrtnaway nrxa randomaka bo encrypt krdn
-    // ama bo awaya kate password update akaynawa passwordaka dwbara encrypt bkretawa
-    // chwnka garwa nakayn awa passwordaka har wakw xoy la dbyaka save abe babe encrypt
-    $query = "SELECT randSalt FROM users";
-    $encrypt_query = mysqli_query($connection, $query);
+        // wrgrtnaway nrxa randomaka bo encrypt krdn
+        // ama bo awaya kate password update akaynawa passwordaka dwbara encrypt bkretawa
+        // chwnka garwa nakayn awa passwordaka har wakw xoy la dbyaka save abe babe encrypt
+        $hashed_password = $user_password;
+        if (!empty($user_password)) {
+            $sql2 = "SELECT user_password FROM users WHERE user_id=$the_user_id";
+            $ex = mysqli_query($connection, $sql2);
 
+            $row = mysqli_fetch_array($ex);
 
-    $row= mysqli_fetch_array($encrypt_query);
-    $salt= $row['randSalt'];
-    $hashed_password=crypt($user_password,$salt);// encryption
+            $salt = $row['randSalt'];
+            $hashed_password = crypt($user_password, $salt);
+        }
 
-
-    $sql="UPDATE users SET  
+        $sql = "UPDATE users SET  
           username='$username',
           user_firstname='$user_firstname',
           user_lastname='$user_lastname',
@@ -55,15 +51,18 @@ if (isset($_POST['edit_user'])) {
           user_email='$user_email',
           user_password='$hashed_password'   
           WHERE user_id=$the_user_id";
-    $update_user_query = mysqli_query($connection, $sql);
-    if (!$update_user_query) {
-        die("QUERY FAILED " . mysqli_error($connection));
-    }
-    else
-    {
-        header("Location: users.php");
-    }
+        $update_user_query = mysqli_query($connection, $sql);
+        if (!$update_user_query) {
+            die("QUERY FAILED " . mysqli_error($connection));
+        } else {
+            header("Location: users.php");
+        }
 
+    }
+}
+else
+{
+    header("Location: index.php");
 }
 
 ?>
@@ -80,7 +79,7 @@ if (isset($_POST['edit_user'])) {
     </div>
 
     <select name="user_role" id="">
-        <option value="subscriber"><?php echo $user_role; ?></option>
+        <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
         <?php
             if ($user_role=='Admin')
             {
