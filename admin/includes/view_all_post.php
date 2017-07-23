@@ -160,9 +160,18 @@
                       echo    '<td>'.$cat_title.'</td>';
                       echo    '<td>'.$post_status.'</td>';
                       echo     "<td> <img width=130 src='../images/$post_image'></td>"; // bo pshandany rasmy naw databaseaka
-                      echo     '<td>'.$post_tags.'</td>
-                               <td>'.$post_comment_count.'</td>
-                               <td>'.$post_date.'</td>';
+                      echo     '<td>'.$post_tags.'</td>';
+
+                      $query="SELECT * FROM comments WHERE comment_post_id= $post_id";
+                      $send_comment_query=mysqli_query($connection,$query);
+                      $count_comment=mysqli_num_rows($send_comment_query);
+
+
+                      echo '<td>'.$count_comment.'</td>';
+
+
+
+                      echo '  <td>'.$post_date.'</td>';
                       echo    "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
                       echo    "<td><a href='posts.php?source=edit_posts&p_id={$post_id}'>Edit</a></td>"; //(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
                       echo    "<td><a href='posts.php?delete_view={$post_id}'>{$post_view_count}</a></td>";                                               // ba bcheta pagey edit_posts (&) chwnka $_GET esta 2 key haya (p_id) bo away (id)y postaka warbgrun
