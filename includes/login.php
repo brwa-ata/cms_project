@@ -24,13 +24,10 @@
             $user_lastname=$row['user_lastname'];
             $user_role=$row['user_role'];
         }
-        $user_password=crypt($user_password,$password);// this is like a decryption
+       // $user_password=crypt($user_password,$password);// this is like a decryption
 
-        if ($user_name !== $username && $user_password !== $password)
-        {
-            header("Location: ../index.php"); // gar uname pass rast nabw bgarewa bo pagey saraky
-        }
-        else if($user_name == $username && $user_password == $password)
+
+        if(password_verify($user_password,$password)) // am functiona xoy barawrdy newan 2 passwordaka aka ka wakw yakn yan na
         {
 
             $_SESSION['username']=$username;
