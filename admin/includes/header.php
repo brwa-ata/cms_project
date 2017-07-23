@@ -56,9 +56,13 @@
     <!-- LINK BO CHARTAKAY NAW ADMIN CHNWKA EMA EMPLATE BAKAR AHENYN BOYA AM LINKA PEWYSTA -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <!-- am linka pewysta bo kar pe krdny aw simple editoray ka bakary ahenyn la edit_post -->
+    <!-- am linka pewysta bo kar pe krdny aw simple editoray ka bakary ahenyn la edit_post
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    -->
 
+    <!-- link to the js file
+    <script src="js/js.js"></script>
+    -->
 
 </head>
 
