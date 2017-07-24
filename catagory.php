@@ -14,17 +14,25 @@
 
             <div class="col-md-8">
 
+
               <?php
-                  $sql="SELECT * FROM posts";
-                  $ex=mysqli_query($connection,$sql);
-                  while ($row=mysqli_fetch_assoc($ex))
-                   {
-                      $post_id=$row['post_id'];
-                      $post_title=$row['post_title'];
-                      $post_author=$row['post_author'];
-                      $post_date=$row['post_date'];
-                      $post_image=$row['post_image'];
-                      $post_content=$row['post_content'];
+                  if(isset($_GET['catagory']))
+                  {
+
+                      $post_catagory_id=$_GET['catagory'];
+
+                      $sql="SELECT * FROM posts WHERE post_catagory_id=$post_catagory_id AND post_status= 'publish' ";
+                      $ex=mysqli_query($connection,$sql);
+                      if (mysqli_num_rows($ex) >= 1 )
+                      {
+                      while ($row=mysqli_fetch_assoc($ex))
+                       {
+                          $post_id=$row['post_id'];
+                          $post_title=$row['post_title'];
+                          $post_author=$row['post_author'];
+                          $post_date=$row['post_date'];
+                          $post_image=$row['post_image'];
+                          $post_content=$row['post_content'];
                 ?>
                 <!-- First Blog Post -->
                 <h1 class="page-header">
@@ -45,7 +53,13 @@
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
-                <?php } ?>
+                <?php } }
+                    else
+                      {
+                          echo "<h1 class='text-center'>NO POSTS AVAILABLE</h1>";
+                      }
+                  }
+                ?>
 
             </div>
 
