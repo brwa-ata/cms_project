@@ -35,10 +35,18 @@
                     }
 
 
-
-                    $query="SELECT * FROM posts ";
+                    // boya am marjaman danawa chwnka ema ba spublish post abinin basheway asayi wa agar publish post nabw wata draft
+                    // bwn ka lam kataya hych pshan nayat pewsyt naka am pagationaman habe la kataeka hych postekman nya
+                    $query="SELECT * FROM posts WHERE post_status='publish' ";
                     $find_post_count=mysqli_query($connection,$query);
                     $count=mysqli_num_rows($find_post_count);
+
+                    if($count <1 )
+                    {
+
+                        echo "<h1 class='text-center'>NO POSTS AVAILABLE</h1>";
+                    }
+
 
                     $count=ceil($count/3);
 
@@ -55,7 +63,7 @@
                       $post_content=substr($row['post_content'],0,10);// tanha 10 charactery sarata la postaka pshan ba
                        $post_status=$row['post_status'];
 
-               if ($post_status == 'publish' || $post_status=='draft')
+               if ($post_status == 'publish' )
                {
 
 
