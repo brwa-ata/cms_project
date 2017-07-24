@@ -99,7 +99,7 @@
 
                     <?php
                            }
-
+                        mysqli_stmt_close($stmt); // Closing the prepared statement
 
                   }
                      ?>
