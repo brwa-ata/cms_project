@@ -20,7 +20,8 @@
                     $run=mysqli_query($connection,$sql);
                     while ($row=mysqli_fetch_assoc($run))
                      {
-                        echo "<li><a href='#'>{$row['title']}</a></li>";
+                         $category_id=$row['id'];
+                        echo "<li><a href='catagory.php?catagory=$category_id'>{$row['title']}</a></li>";
                      }
                ?>
                 <li>
