@@ -34,45 +34,52 @@
                         $page_1=($page*3) - 3;
                     }
 
+              if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin') {
+                  $sql="SELECT * FROM posts LIMIT $page_1,3";
+                  $query="SELECT * FROM posts ";
 
-                    // boya am marjaman danawa chwnka ema ba spublish post abinin basheway asayi wa agar publish post nabw wata draft
+              } else {
+                  $sql="SELECT * FROM posts WHERE post_status='publish' LIMIT $page_1,3";
+                  $query="SELECT * FROM posts WHERE post_status='publish' ";
+              }
+
+
+
+              // boya am marjaman danawa chwnka ema bas publish post abinin basheway asayi wa agar publish post nabw wata draft
                     // bwn ka lam kataya hych pshan nayat pewsyt naka am pagationaman habe la kataeka hych postekman nya
-                    $query="SELECT * FROM posts WHERE post_status='publish' ";
+
                     $find_post_count=mysqli_query($connection,$query);
                     $count=mysqli_num_rows($find_post_count);
-
-                    if($count <1 )
+                    if (!$find_post_count)
                     {
-
-                        echo "<h1 class='text-center'>NO POSTS AVAILABLE</h1>";
+                        die("QUERY FAILED " . mysqli_error($connection));
                     }
 
+                    if ($count <1 )
+                    {
+                        echo "<h1 class='text-center'>No posts available</h1>";
+                    }
 
-                    $count=ceil($count/3);
+                    else{
+                         $count=ceil($count/3);
 
 
-                  $sql="SELECT * FROM posts LIMIT $page_1,3";
-                  $ex=mysqli_query($connection,$sql);
-                  while ($row=mysqli_fetch_assoc($ex))
-                   {
-                      $post_id=$row['post_id'];
-                      $post_title=$row['post_title'];
-                      $post_author=$row['post_user'];
-                      $post_date=$row['post_date'];
-                      $post_image=$row['post_image'];
-                      $post_content=substr($row['post_content'],0,10);// tanha 10 charactery sarata la postaka pshan ba
-                       $post_status=$row['post_status'];
-
-               if ($post_status == 'publish' )
-               {
-
+                      $ex=mysqli_query($connection,$sql);
+                      while ($row=mysqli_fetch_assoc($ex))
+                       {
+                          $post_id=$row['post_id'];
+                          $post_title=$row['post_title'];
+                          $post_author=$row['post_user'];
+                          $post_date=$row['post_date'];
+                          $post_image=$row['post_image'];
+                          $post_content=substr($row['post_content'],0,10);// tanha 10 charactery sarata la postaka pshan ba
+                           $post_status=$row['post_status'];
 
                 ?>
 
                 <!-- First Blog Post -->
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                    Posts
                 </h1>
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
@@ -92,7 +99,7 @@
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
-                <?php } }?>
+                <?php } } ?>
 
             </div>
 
@@ -101,14 +108,15 @@
               <?php  include 'includes/sidebar.php';   ?>
 
         </div>
-      </div>
+
+        <?php
+        include 'includes/footer.php';
+        ?>
+
+
+    </div>
         <!-- /.row -->
 
-        <hr>
-        <?php
-          include 'includes/footer.php';
-         ?>
-    <hr>
 
     <ul class="pager">
 
