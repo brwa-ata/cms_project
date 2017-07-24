@@ -189,8 +189,18 @@
                       echo "<td><a href='view_post_comment.php?post_id=$comment_post_id'>$count_comment</a></td>";
 
                       echo '  <td>'.$post_date.'</td>';
-                      echo    "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
-                      echo    "<td><a href='posts.php?source=edit_posts&p_id={$post_id}'>Edit</a></td>"; //(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
+                      ?>
+
+                    <form action="" method="post">
+                        <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+                        <?php
+                              echo '<td><input class="btn btn-danger" type="submit" name="delete" value="Delete"></td>';
+                        ?>
+                    </form>
+
+                     <?php
+                      //echo    "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";// bo away ba $_GET btwanyn (id)y har postek war bgrin
+                      echo    "<td><a class='btn btn-info' href='posts.php?source=edit_posts&p_id={$post_id}'>Edit</a></td>"; //(source) chwnka la posts.php bakarman henawa =edit_posts chwnka la case waman danawa gar source yaksan bw bama
                       echo    "<td><a href='posts.php?delete_view={$post_id}'>{$post_view_count}</a></td>";                                               // ba bcheta pagey edit_posts (&) chwnka $_GET esta 2 key haya (p_id) bo away (id)y postaka warbgrun
                       echo    "</tr>";                                                                  // kawata esta bam shewaya ka (edit)man krd achyna pagey editawa ka atwanin edit bkayn bo aw posta
 
@@ -204,9 +214,9 @@
 </form>
 
 <?php // DELETE POSTS
-    if(isset($_GET['delete'])) // am delete hy (key)akaya ==> ?delete
+    if(isset($_POST['delete'])) // am delete hy (key)akaya ==> ?delete
     {
-      $delete_cat_id=$_GET['delete'];
+      $delete_cat_id=$_POST['delete'];
       $query2="DELETE FROM posts WHERE post_id = {$delete_cat_id} ";
       $delete_query=mysqli_query($connection,$query2);
       if(!$delete_query)
