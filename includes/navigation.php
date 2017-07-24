@@ -21,13 +21,28 @@
                     while ($row=mysqli_fetch_assoc($run))
                      {
                          $category_id=$row['id'];
-                        echo "<li><a href='catagory.php?catagory=$category_id'>{$row['title']}</a></li>";
+                         $category_class = '';
+
+                         $registration_class='';
+
+                         $page_name=basename($_SERVER['PHP_SELF']); // bo wargrnty nawy aw pageay ka tyayayn
+
+                         $registration = 'registration.php';
+                         if(isset($_GET['catagory']) && $_GET['catagory'] == $category_id)
+                         {
+                             $category_class='active';
+                         }
+                         elseif ($page_name == $registration )
+                         {
+                             $registration_class='active';
+                         }
+                        echo "<li class='$category_class'><a href='catagory.php?catagory=$category_id'>{$row['title']}</a></li>";
                      }
                ?>
                 <li>
                     <a href="admin">Admin</a>
                 </li>
-                <li>
+                <li class='<?php echo $registration_class; ?>'>
                     <a href="./registration.php">Registration</a>
                 </li>
 
