@@ -27,7 +27,7 @@
       }
       if(isset($_POST['update_post']))
       {
-        $post_author=$_POST['author'];
+        $post_author=$_POST['user'];
         $post_title=$_POST['title'];
         $post_catagory_id=$_POST['post_catagory'];
         $post_status=$_POST['post_status'];
@@ -94,7 +94,16 @@
               {
                 $cat_id=$row['id'];
                 $cat_title=$row['title'];
-                echo "<option value='$cat_id'>$cat_title</opstion>";
+
+                if ($cat_id == $post_catagory_id)
+                {
+                    echo "<option selected value='$cat_id'>$cat_title</opstion>";// ama wa aka ka default value aw categorya be ka xoy hayaty
+                    //awysh la regay marjakaw keywordy selected
+                }
+                else
+                {
+                    echo "<option value='$cat_id'>$cat_title</opstion>";
+                }
               }
           }
         ?>
