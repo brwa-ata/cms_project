@@ -28,7 +28,17 @@
                   die("QUERY FAILED " . mysqli_error($connection));
               }
 
-              $sql="SELECT * FROM posts WHERE post_id= $the_post_id ";
+
+              if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
+              {
+                  $sql="SELECT * FROM posts WHERE post_id= $the_post_id ";
+              }
+                else
+                {
+                    $sql="SELECT * FROM posts WHERE post_id= $the_post_id AND  post_status='publish'";
+                }
+
+
               $ex=mysqli_query($connection,$sql);
               while ($row=mysqli_fetch_assoc($ex))
                {
@@ -41,8 +51,7 @@
 
                 <!-- First Blog Post -->
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                    Posts
                 </h1>
                 <h2>
                     <a href="#"><?php echo $post_title ?></a>
@@ -57,12 +66,7 @@
                 <hr>
                 <p><b><?php echo $post_content ?></b></p>
                 <?php }
-            }
 
-          else
-          {
-              header("Location: index.php");
-          }
 
                 ?>
 
@@ -139,7 +143,11 @@
                 <!-- Posted Comments -->
                 <?php
 
-                    $query="SELECT * FROM comments WHERE comment_post_id=$post_id AND 
+                if(isset($_GET['p_id']))
+                {
+                    $the_post_id=$_GET['p_id'];
+
+                    $query="SELECT * FROM comments WHERE comment_post_id=$the_post_id AND 
                             comment_status= 'approved' ORDER BY comment_id DESC ";
                     $select_comment_query=mysqli_query($connection,$query);
 
@@ -172,7 +180,13 @@
                             </div>
                         </div>
 
-                 <?php } }?>
+                 <?php } } }
+            }
+
+            else
+            {
+                header("Location: index.php");
+            }?>
 
 
 
