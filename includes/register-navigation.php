@@ -16,13 +16,29 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
 
-              <?php $sql="select * from catagory";
-                    $run=mysqli_query($connection,$sql);
-                    while ($row=mysqli_fetch_assoc($run))
-                     {
-                        echo "<li><a href='#'>{$row['title']}</a></li>";
-                     }
-               ?>
+                <?php $sql="select * from catagory";
+                $run=mysqli_query($connection,$sql);
+                while ($row=mysqli_fetch_assoc($run))
+                {
+                    $category_id=$row['id'];
+                    $category_class = '';
+
+                    $registration_class='';
+
+                    $page_name=basename($_SERVER['PHP_SELF']); // bo wargrnty nawy aw pageay ka tyayayn
+
+                    $registration = 'registration.php';
+                    if(isset($_GET['catagory']) && $_GET['catagory'] == $category_id)
+                    {
+                        $category_class='active';
+                    }
+                    elseif ($page_name == $registration )
+                    {
+                        $registration_class='active';
+                    }
+                    echo "<li class='$category_class'><a href='catagory.php?catagory=$category_id'>{$row['title']}</a></li>";
+                }
+                ?>
                 <li>
                     <a href="admin">Admin</a>
                 </li>
