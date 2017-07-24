@@ -1,4 +1,32 @@
 <?php
+/**
+ * am functiona booleana peman ale  ka usera  admina yaxwd na
+ *
+ * @param string $username
+ * @return bool
+ */
+
+function is_admin($username ='')
+{
+    global $connection;
+
+    $sql="SELECT user_role FROM users WHERE username = '$username'";
+    $result = mysqli_query($connection,$sql);
+    if (!$result)
+    {
+        die("QUERY FAILED" .mysqli_error($connection));
+    }
+
+    $row= mysqli_fetch_array($result);
+    if ($row['user_role'] == 'Admin')
+    {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 
 /****
  * nardny nawy table bo am functionaw zhmardny (row)ya kany ka admin/index pewystmana
