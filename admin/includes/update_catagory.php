@@ -22,14 +22,19 @@
       <?php
         if(isset($_POST['update_catagory']))
         {
-          $update_cat_id=$_POST['cat_title'];
-          $update_sql="UPDATE catagory SET title = '{$update_cat_id}'
-                        WHERE id= {$cat_id}";
-          $up_quey=mysqli_query($connection,$update_sql);
-          if(!$up_quey)
+          $update_cat_title=$_POST['cat_title'];
+
+            $query=mysqli_prepare($connection,"UPDATE catagory SET title = ? WHERE id= ? ") ;
+
+            mysqli_stmt_bind_param($query,'si',$update_cat_title,$cat_id);
+            mysqli_stmt_execute($query);
+
+          if(!$query)
           {
             die("QUERY FAILED" . mysqli_error($connection));
           }
+
+          header("Location: catagories.php");
         }
        ?>
 
