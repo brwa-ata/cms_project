@@ -1,5 +1,52 @@
 <?php
 
+/****
+ * nardny nawy table bo am functionaw zhmardny (row)ya kany ka admin/index pewystmana
+ * @param $table
+ * @return int
+ *
+ *
+ */
+function countRecord($table)
+{
+    global $connection;
+    $sql="SELECT * FROM $table ";
+    $select_all_post=mysqli_query($connection,$sql);
+    if (!$select_all_post)
+    {
+        die("QUERY FAILED ". mysqli_error($connection));
+    }
+
+    $recordCount=mysqli_num_rows($select_all_post);
+
+    return $recordCount;
+}
+
+/***
+ *
+ * @param $table
+ * @param $column
+ * @param $record
+ * @return int
+ */
+
+function checkStatus($table,$column_name,$status)
+{
+    global  $connection;
+    $sql="SELECT * FROM $table WHERE $column_name = '$status'";
+    $get_query=mysqli_query($connection,$sql);
+    if (!$get_query)
+    {
+        die("QUERY FAILED " . mysqli_error($connection));
+    }
+
+    $result = mysqli_num_rows($get_query);
+
+    return $result;
+
+}
+
+
 
 function escape($string)// am functiona bakar de bo naheshty sql injection
     // boya har kate dataman la form wargrtawa ama bakar ahenyn
@@ -9,8 +56,6 @@ function escape($string)// am functiona bakar de bo naheshty sql injection
     return mysqli_real_escape_string($connection,trim($string));
 
 }
-
-
 
 
   function insert_catagories()
