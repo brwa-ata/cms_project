@@ -98,13 +98,17 @@ function escape($string)// am functiona bakar de bo naheshty sql injection
       }
       else
       {
-        $query="INSERT INTO catagory(title)
-                VALUES('$cat_title') ";
-        $create_catagory_query=mysqli_query($connection,$query);
-        if(!$create_catagory_query)
-        {
-          die("QUERY FAILED". mysqli_error($connection));
-        }
+
+
+            $query=mysqli_prepare($connection,"INSERT INTO catagory(title) VALUES(?)") ;
+            mysqli_stmt_bind_param($query,'s',$cat_title);
+            mysqli_stmt_execute($query);
+
+            if(!$query)
+            {
+              die("QUERY FAILED". mysqli_error($connection));
+            }
+
       }
     }
   }
