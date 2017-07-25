@@ -75,6 +75,49 @@ function checkStatus($table,$column_name,$status)
 }
 
 
+/***
+ * @param null $method
+ * @return bool
+ */
+function ifItsMethod($method=null)
+{
+    if ($_SERVER['REQUEST_METHOD'] == strtoupper($method) )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+/***
+ * @return bool
+ */
+function isLoggedIn()
+{
+    if ($_SESSION['user_role'])
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+/**
+ * @param string $redirectLocation
+ */
+function checkIfUserIsLoggedInAndRedirect($redirectLocation='')
+{
+    if (isLoggedIn())
+    {
+        header("Location:".$redirectLocation);
+    }
+}
+
+
 
 function escape($string)// am functiona bakar de bo naheshty sql injection
     // boya har kate dataman la form wargrtawa ama bakar ahenyn
