@@ -1,0 +1,12 @@
+{
+    "name": "brwa/cms",
+    "require": {
+        "phpmailer/phpmailer": "^5.2"
+    },
+    "authors": [
+        {
+            "name": "Brwa Ata SaedHamalw",
+            "email": "brwa.ata.hamalaw@gmail.com"
+        }
+    ]
+}
