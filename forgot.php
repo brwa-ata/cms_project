@@ -52,21 +52,28 @@
                    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
                    $mail->SMTPAuth = true;                               // Enable SMTP authentication
                    $mail->isHTML(true);
+                   $mail->CharSet='UTF-8';
 
                    $mail->setFrom('brwa.ata.hamalaw@gmail.com', 'Brwa Ata');
                    $mail->addAddress($email);
 
                    $mail->Subject = 'This is a test email';
 
-                   $mail->Body='<h1>Email Body</h1> ';
+                   $mail->Body='<p>Please click to reset your password
+
+                   <a href="http://localhost/cms/reset.php?email='.$email.'&token='.$token.'">
+                   http://localhost/cms/reset.php?email='.$email.'&token='.$token.'
+                   
+                    </a>  </p> ';
 
                    if ($mail->send())
                    {
-                       echo "Your email was sent";
+                       $emailSent=true;
                    }
                    else
                    {
                        echo "Your email was NOT sent";
+                       $emailSent=false;
                    }
 
 
@@ -90,6 +97,9 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
+
+
+                            <?php  if (!isset($emailSent)): ?>
 
 
                             <h3><i class="fa fa-lock fa-4x"></i></h3>
@@ -116,6 +126,10 @@
                                 </form>
 
                             </div><!-- Body-->
+                            <?php else: ?>
+                            <h2>Please check your email</h2>
+
+                            <?php endif; ?>
 
                         </div>
                     </div>
