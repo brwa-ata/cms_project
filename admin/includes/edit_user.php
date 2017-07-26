@@ -7,8 +7,10 @@ if (isset($_GET['u_id'])) {
     $get_query = mysqli_query($connection, $query);
     if (!$get_query) {
         die("QUERY FAILED" . mysqli_error($connection));
-    } else {
-        while ($row = mysqli_fetch_assoc($get_query)) {
+    } else
+        {
+        while ($row = mysqli_fetch_assoc($get_query))
+        {
             $user_firstname = $row['user_firstname'];
             $user_lastname = $row['user_lastname'];
             $user_role = $row['user_role'];
@@ -32,18 +34,20 @@ if (isset($_GET['u_id'])) {
         // wrgrtnaway nrxa randomaka bo encrypt krdn
         // ama bo awaya kate password update akaynawa passwordaka dwbara encrypt bkretawa
         // chwnka garwa nakayn awa passwordaka har wakw xoy la dbyaka save abe babe encrypt
-        $hashed_password = $user_password;
-        if (!empty($user_password)) {
-            $sql2 = "SELECT user_password FROM users WHERE user_id=$the_user_id";
+
+        if (!empty($user_password))
+        {
+            $sql2 = "SELECT randSalt FROM users";
             $ex = mysqli_query($connection, $sql2);
-
+            if (!$ex) {
+                die("QUERY FAILED " . mysqli_error());
+            }
             $row = mysqli_fetch_array($ex);
-
             $salt = $row['randSalt'];
             $hashed_password = crypt($user_password, $salt);
-        }
 
-        $sql = "UPDATE users SET  
+
+            $sql = "UPDATE users SET  
           username='$username',
           user_firstname='$user_firstname',
           user_lastname='$user_lastname',
@@ -51,11 +55,28 @@ if (isset($_GET['u_id'])) {
           user_email='$user_email',
           user_password='$hashed_password'   
           WHERE user_id=$the_user_id";
-        $update_user_query = mysqli_query($connection, $sql);
-        if (!$update_user_query) {
-            die("QUERY FAILED " . mysqli_error($connection));
-        } else {
-            header("Location: users.php");
+            $update_user_query = mysqli_query($connection, $sql);
+            if (!$update_user_query) {
+                die("QUERY FAILED " . mysqli_error($connection));
+            } else {
+                echo "Updated successfully";
+            }
+        }
+        else
+        {
+            $sql = "UPDATE users SET  
+          username='$username',
+          user_firstname='$user_firstname',
+          user_lastname='$user_lastname',
+          user_role='$user_role',
+          user_email='$user_email'   
+          WHERE user_id=$the_user_id";
+            $update_user_query = mysqli_query($connection, $sql);
+            if (!$update_user_query) {
+                die("QUERY FAILED " . mysqli_error($connection));
+            } else {
+                echo "Updated successfully";
+            }
         }
 
     }
@@ -95,7 +116,7 @@ else
 <!--
     <div class="form-group">
         <label for="user_image"></label>
-        <input value="<?php echo $user_image; ?>" type="file" name="user_image">
+        <input value="<?php echo $db_user_image; ?>" type="file" name="user_image">
     </div>
 -->
 
