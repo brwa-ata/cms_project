@@ -35,22 +35,47 @@
             $user_email = $_POST['user_email'];
             $user_password = $_POST['user_password'];
 
-            $sql="UPDATE users SET  
+
+            if (!empty($user_password)) {
+                $sql2 = "SELECT randSalt FROM users";
+                $ex = mysqli_query($connection, $sql2);
+                if (!$ex) {
+                    die("QUERY FAILED " . mysqli_error());
+                }
+                $row = mysqli_fetch_array($ex);
+                $salt = $row['randSalt'];
+                $hashed_password = crypt($user_password, $salt);
+
+                $sql = "UPDATE users SET  
                   username='$username',
                   user_firstname='$user_firstname',
                   user_lastname='$user_lastname',
                   user_role='$user_role',
                   user_email='$user_email',
-                  user_password='$user_password'   
+                  user_password='$hashed_password'   
                   WHERE username='$the_username'";
-            $update_user_query = mysqli_query($connection, $sql);
-            if (!$update_user_query)
-            {
-                die("QUERY FAILED " . mysqli_error($connection));
+                $update_user_query = mysqli_query($connection, $sql);
+                if (!$update_user_query) {
+                    die("QUERY FAILED " . mysqli_error($connection));
+                } else {
+                    header("Location: index.php");
+                }
             }
             else
             {
-                header("Location: users.php");
+                $sql = "UPDATE users SET  
+                  username='$username',
+                  user_firstname='$user_firstname',
+                  user_lastname='$user_lastname',
+                  user_role='$user_role',
+                  user_email='$user_email'  
+                  WHERE username='$the_username'";
+                $update_user_query = mysqli_query($connection, $sql);
+                if (!$update_user_query) {
+                    die("QUERY FAILED " . mysqli_error($connection));
+                } else {
+                    header("Location: index.php");
+                }
             }
 
         }
@@ -114,7 +139,7 @@
 
                         <div class="form-group">
                             <label for="post_content">Password</label>
-                            <input value="<?php echo $user_password?>" type="password" class="form-control" name="user_password">
+                            <input value="" type="password" class="form-control" name="user_password">
                         </div>
 
                         <div class="form-group">
